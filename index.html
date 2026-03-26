@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكي للخردوات عامة | Makki Hardware</title>
+    <meta name="description" content="أفضل المنتجات المنزلية، أدوات، مواد تنظيف وأقفال في غليزان. جودة عالية وأسعار مناسبة.">
+    <!-- Google Fonts: Outfit for English/French, Cairo for Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/main.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <div class="logo" data-i18n="logo">مكي للخردوات</div>
+            <div class="nav-links" id="nav-links">
+                <a href="#hero" data-i18n="nav_home">الرئيسية</a>
+                <a href="#categories" data-i18n="nav_categories">الأصناف</a>
+                <a href="#products" data-i18n="nav_products">المنتجات</a>
+                <a href="#contact" data-i18n="nav_contact">اتصل بنا</a>
+            </div>
+            <div class="nav-actions">
+                <div class="lang-switcher">
+                    <button id="lang-btn">AR</button>
+                    <ul class="lang-menu" id="lang-menu">
+                        <li><button data-lang="ar">العربية</button></li>
+                        <li><button data-lang="fr">Français</button></li>
+                        <li><button data-lang="en">English</button></li>
+                    </ul>
+                </div>
+                <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header id="hero" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content" data-reveal>
+            <h1 data-i18n="hero_title">كل ما تحتاجه للمنزل في مكان واحد</h1>
+            <p data-i18n="hero_subtitle">الجودة، الثقة، والاحترافية في خدمتكم. اكتشف تشكيلتنا الواسعة من الأدوات واللوازم المنزلية.</p>
+            <div class="hero-btns">
+                <a href="#products" class="btn btn-primary" data-i18n="hero_btn_shop">تصفح المنتجات</a>
+                <a href="https://wa.me/213550743286" class="btn btn-secondary" data-i18n="hero_btn_wa">اطلب عبر واتساب</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="categories" class="categories">
+        <div class="container">
+            <h2 class="section-title text-center" data-i18n="categories_title" data-reveal>أصنافنا المختارة</h2>
+            <div class="category-grid">
+                <div class="category-card" data-reveal>
+                    <img src="https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&q=80&w=800" alt="Tools" loading="lazy">
+                    <div class="category-info">
+                        <h3 data-i18n="cat_tools">الأدوات</h3>
+                    </div>
+                </div>
+                <div class="category-card" data-reveal>
+                    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800" alt="Cleaning" loading="lazy">
+                    <div class="category-info">
+                        <h3 data-i18n="cat_cleaning">مواد تنظيف</h3>
+                    </div>
+                </div>
+                <div class="category-card" data-reveal>
+                    <img src="https://images.unsplash.com/photo-1509148003664-9669e46a51cc?auto=format&fit=crop&q=80&w=800" alt="Hardware" loading="lazy">
+                    <div class="category-info">
+                        <h3 data-i18n="cat_hardware">أقفال و مفاتيح</h3>
+                    </div>
+                </div>
+                <div class="category-card" data-reveal>
+                    <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=800" alt="Home" loading="lazy">
+                    <div class="category-info">
+                        <h3 data-i18n="cat_home">لوازم منزلية</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="products">
+        <div class="container">
+            <h2 class="section-title text-center" data-i18n="products_title" data-reveal>منتجات مختارة</h2>
+            <div class="product-grid" id="product-list">
+                <!-- Products will be injected by main.js -->
+            </div>
+        </div>
+    </section>
+
+    <section id="why-us" class="why-us">
+        <div class="container">
+            <div class="why-grid">
+                <div class="why-item" data-reveal>
+                    <div class="why-icon">✨</div>
+                    <h3 data-i18n="why_quality">جودة عالية</h3>
+                    <p data-i18n="why_quality_desc">نختار أفضل الماركات العالمية والمحلية.</p>
+                </div>
+                <div class="why-item" data-reveal>
+                    <div class="why-icon">💰</div>
+                    <h3 data-i18n="why_price">أسعار مناسبة</h3>
+                    <p data-i18n="why_price_desc">أفضل قيمة مقابل السعر في السوق.</p>
+                </div>
+                <div class="why-item" data-reveal>
+                    <div class="why-icon">🚚</div>
+                    <h3 data-i18n="why_delivery">توصيل سريع</h3>
+                    <p data-i18n="why_delivery_desc">توصيل لباب المنزل في وقت قياسي.</p>
+                </div>
+                <div class="why-item" data-reveal>
+                    <div class="why-icon">🤝</div>
+                    <h3 data-i18n="why_trust">خدمة موثوقة</h3>
+                    <p data-i18n="why_trust_desc">نحن هنا لمساعدتكم في أي وقت.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h2 data-i18n="logo">مكي للخردوات</h2>
+                <p data-i18n="footer_desc">وجهتكم الأولى لكل مستلزمات المنزل والخردوات في غليزان.</p>
+            </div>
+            <div class="footer-info">
+                <p>📍 <span data-i18n="address">غليزان، الجزائر</span></p>
+                <p>📞 <span data-i18n="phone">0550 74 32 86</span></p>
+                <p>💬 <span data-i18n="whatsapp">واتساب: +213 550 74 32 86</span></p>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <p>&copy; 2024 مكي للخردوات. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/213550743286" class="whatsapp-sticky" target="_blank" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42 1.56 1.56 2.41 3.63 2.41 5.83 0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.19-.3a8.132 8.132 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m-3.61 2.94c-.2 0-.33.01-.5.06-.17.06-.44.23-.74.55-.29.33-1.12 1.1-1.12 2.67s1.14 3.1 1.3 3.3c.16.2 2.22 3.39 5.39 4.75.75.32 1.34.52 1.79.66.76.24 1.45.21 2 .13.61-.08 1.88-.77 2.15-1.51.26-.74.26-1.37.18-1.51-.08-.13-.28-.21-.58-.36-.31-.15-1.82-.9-2.1-.99-.28-.1-.49-.15-.69.15-.2.29-.77.98-.94 1.17-.17.19-.34.21-.64.06-.3-.15-1.27-.47-2.42-1.5-0.89-.79-1.49-1.77-1.67-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.33.44-.5.15-.17.2-.28.3-.46.1-.19.05-.35-.02-.5-.08-.15-.69-1.67-.95-2.29-.25-.59-.51-.51-.69-.52-.18-.01-.39-.01-.59-.01z"/></svg>
+    </a>
+
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-body">
+                <!-- Modal content will be injected -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
