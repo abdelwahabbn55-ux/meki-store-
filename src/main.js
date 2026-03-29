@@ -232,6 +232,68 @@ langBtn.addEventListener('click', () => {
     langMenu.classList.toggle('active');
 });
 
+// Algerian Wilayas (58)
+const wilayas = [
+    { id: "01", ar: "أدرار", fr: "Adrar", en: "Adrar" },
+    { id: "02", ar: "الشلف", fr: "Chlef", en: "Chlef" },
+    { id: "03", ar: "الأغواط", fr: "Laghouat", en: "Laghouat" },
+    { id: "04", ar: "أم البواقي", fr: "Oum El Bouaghi", en: "Oum El Bouaghi" },
+    { id: "05", ar: "باتنة", fr: "Batna", en: "Batna" },
+    { id: "06", ar: "بجاية", fr: "Béjaïa", en: "Béjaïa" },
+    { id: "07", ar: "بسكرة", fr: "Biskra", en: "Biskra" },
+    { id: "08", ar: "بشار", fr: "Béchar", en: "Béchar" },
+    { id: "09", ar: "البليدة", fr: "Blida", en: "Blida" },
+    { id: "10", ar: "البويرة", fr: "Bouira", en: "Bouira" },
+    { id: "11", ar: "تمنراست", fr: "Tamanrasset", en: "Tamanrasset" },
+    { id: "12", ar: "تبسة", fr: "Tébessa", en: "Tébessa" },
+    { id: "13", ar: "تلمسان", fr: "Tlemcen", en: "Tlemcen" },
+    { id: "14", ar: "تيارت", fr: "Tiaret", en: "Tiaret" },
+    { id: "15", ar: "تيزي وزو", fr: "Tizi Ouzou", en: "Tizi Ouzou" },
+    { id: "16", ar: "الجزائر", fr: "Alger", en: "Algiers" },
+    { id: "17", ar: "الجلفة", fr: "Djelfa", en: "Djelfa" },
+    { id: "18", ar: "جيجل", fr: "Jijel", en: "Jijel" },
+    { id: "19", ar: "سطيف", fr: "Sétif", en: "Sétif" },
+    { id: "20", ar: "سعيدة", fr: "Saïda", en: "Saïda" },
+    { id: "21", ar: "سكيكدة", fr: "Skikda", en: "Skikda" },
+    { id: "22", ar: "سيدي بلعباس", fr: "Sidi Bel Abbès", en: "Sidi Bel Abbès" },
+    { id: "23", ar: "عنابة", fr: "Annaba", en: "Annaba" },
+    { id: "24", ar: "قالمة", fr: "Guelma", en: "Guelma" },
+    { id: "25", ar: "قسنطينة", fr: "Constantine", en: "Constantine" },
+    { id: "26", ar: "المدية", fr: "Médéa", en: "Médéa" },
+    { id: "27", ar: "مستغانم", fr: "Mostaganem", en: "Mostaganem" },
+    { id: "28", ar: "المسيلة", fr: "M'Sila", en: "M'Sila" },
+    { id: "29", ar: "معسكر", fr: "Mascara", en: "Mascara" },
+    { id: "30", ar: "ورقلة", fr: "Ouargla", en: "Ouargla" },
+    { id: "31", ar: "وهران", fr: "Oran", en: "Oran" },
+    { id: "32", ar: "البيض", fr: "El Bayadh", en: "El Bayadh" },
+    { id: "33", ar: "إليزي", fr: "Illizi", en: "Illizi" },
+    { id: "34", ar: "برج بوعريريج", fr: "Bordj Bou Arreridj", en: "Bordj Bou Arreridj" },
+    { id: "35", ar: "بومرداس", fr: "Boumerdès", en: "Boumerdès" },
+    { id: "36", ar: "الطارف", fr: "El Tarf", en: "El Tarf" },
+    { id: "37", ar: "تندوف", fr: "Tindouf", en: "Tindouf" },
+    { id: "38", ar: "تيسمسيلت", fr: "Tissemsilt", en: "Tissemsilt" },
+    { id: "39", ar: "الوادي", fr: "El Oued", en: "El Oued" },
+    { id: "40", ar: "خنشلة", fr: "Khenchela", en: "Khenchela" },
+    { id: "41", ar: "سوق أهراس", fr: "Souk Ahras", en: "Souk Ahras" },
+    { id: "42", ar: "تيبازة", fr: "Tipaza", en: "Tipaza" },
+    { id: "43", ar: "ميلة", fr: "Mila", en: "Mila" },
+    { id: "44", ar: "عين الدفلى", fr: "Aïn Defla", en: "Aïn Defla" },
+    { id: "45", ar: "النعامة", fr: "Naâma", en: "Naâma" },
+    { id: "46", ar: "عين تموشنت", fr: "Aïn Témouchent", en: "Aïn Témouchent" },
+    { id: "47", ar: "غرداية", fr: "Ghardaïa", en: "Ghardaïa" },
+    { id: "48", ar: "غليزان", fr: "Relizane", en: "Relizane" },
+    { id: "49", ar: "تيميمون", fr: "Timimoun", en: "Timimoun" },
+    { id: "50", ar: "برج باجي مختار", fr: "Bordj Badji Mokhtar", en: "Bordj Badji Mokhtar" },
+    { id: "51", ar: "أولاد جلال", fr: "Ouled Djellal", en: "Ouled Djellal" },
+    { id: "52", ar: "بني عباس", fr: "Béni Abbès", en: "Béni Abbès" },
+    { id: "53", ar: "عين صالح", fr: "In Salah", en: "In Salah" },
+    { id: "54", ar: "عين قزام", fr: "In Guezzam", en: "In Guezzam" },
+    { id: "55", ar: "تقرت", fr: "Touggourt", en: "Touggourt" },
+    { id: "56", ar: "جانت", fr: "Djanet", en: "Djanet" },
+    { id: "57", ar: "المغير", fr: "El M'Ghair", en: "El M'Ghair" },
+    { id: "58", ar: "المنيعة", fr: "El Meniaa", en: "El Meniaa" }
+];
+
 // Menu Toggle Logic
 const menuToggle = document.getElementById('menu-toggle');
 const navLinks = document.getElementById('nav-links');
@@ -357,6 +419,47 @@ document.getElementById('checkout-btn').addEventListener('click', () => {
 document.getElementById('back-to-cart').addEventListener('click', () => {
     document.getElementById('order-form-container').classList.remove('active');
 });
+
+// Custom Select Logic
+const wilayaSelect = document.getElementById('wilaya-select');
+const wilayaTrigger = document.getElementById('wilaya-trigger');
+const wilayaOptions = document.getElementById('wilaya-options');
+const hiddenWilayaInput = document.getElementById('cust-wilaya');
+
+function setupWilayaDropdown() {
+    wilayaOptions.innerHTML = wilayas.map(w => `
+        <div class="select-option" data-value="${w[currentLang]} (${w.id})">
+            ${w[currentLang]} (${w.id})
+        </div>
+    `).join('');
+    
+    document.querySelectorAll('.select-option').forEach(option => {
+        option.addEventListener('click', () => {
+            const val = option.getAttribute('data-value');
+            wilayaTrigger.querySelector('span').textContent = val;
+            hiddenWilayaInput.value = val;
+            wilayaSelect.classList.remove('active');
+        });
+    });
+}
+
+wilayaTrigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    wilayaSelect.classList.toggle('active');
+});
+
+document.addEventListener('click', (e) => {
+    if (!wilayaSelect.contains(e.target)) {
+        wilayaSelect.classList.remove('active');
+    }
+});
+
+// Update updateUI to include Wilaya setup
+const originalUpdateUI = updateUI;
+updateUI = function() {
+    originalUpdateUI();
+    setupWilayaDropdown();
+};
 
 // WhatsApp Message Generator
 document.getElementById('order-form').addEventListener('submit', (e) => {
