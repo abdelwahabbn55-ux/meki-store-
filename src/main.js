@@ -136,38 +136,38 @@ const translations = {
     }
 };
 
-const products = [
-    {
-        id: 1,
-        name: { ar: "مجموعة مفاتيح فاخرة", fr: "Jeu de clés premium", en: "Premium Wrench Set" },
-        price: "4,500 DZD",
-        img: "https://images.unsplash.com/photo-1581244191949-fe12340316e3?auto=format&fit=crop&q=80&w=800",
-        desc: { ar: "مجموعة متكاملة من المفاتيح الفولاذية عالية الجودة.", fr: "Un ensemble complet de clés en acier de haute qualité.", en: "A complete set of high-quality steel wrenches." }
-    },
-    {
-        id: 2,
-        name: { ar: "منظف بريليكس 5 لتر", fr: "Nettoyant Brilex 5L", en: "Brilex Cleaner 5L" },
-        price: "850 DZD",
-        img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800",
-        desc: { ar: "منظف أرضيات برائحة منعشة وقوة تنظيف مضاعفة.", fr: "Nettoyant pour sols au parfum frais et double pouvoir nettoyant.", en: "Floor cleaner with fresh scent and double cleaning power." }
-    },
-    {
-        id: 3,
-        name: { ar: "قفل باب ذكي", fr: "Serrure de porte intelligente", en: "Smart Door Lock" },
-        price: "12,000 DZD",
-        img: "https://images.unsplash.com/photo-1509148003664-9669e46a51cc?auto=format&fit=crop&q=80&w=800",
-        desc: { ar: "قفل باب حديث بأعلى معايير الأمان والجمالية.", fr: "Serrure de porte moderne avec les plus hauts standards de sécurité.", en: "Modern door lock with the highest security standards." }
-    },
-    {
-        id: 4,
-        name: { ar: "غطاء طاولة مودرن", fr: "Nappe de table moderne", en: "Modern Table Cover" },
-        price: "2,200 DZD",
-        img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=800",
-        desc: { ar: "غطاء طاولة مقاوم للسوائل بتصميم راقي.", fr: "Nappe de table imperméable au design sophistiqué.", en: "Liquid-resistant table cover with a sophisticated design." }
-    }
-];
+import { createClient } from '@supabase/supabase-js';
+
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let products = [];
 
 let currentLang = 'ar';
+
+async function fetchProducts() {
+    const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error('Error fetching dynamic products:', error);
+        return;
+    }
+
+    // Transform Supabase record to expected UI format
+    products = data.map(p => ({
+        id: p.id,
+        name: { ar: p.name_ar, fr: p.name_fr, en: p.name_en },
+        price: p.price,
+        img: p.image_url,
+        desc: { ar: p.desc_ar || '', fr: p.desc_fr || '', en: p.desc_en || '' }
+    }));
+
+    updateUI();
+}
 
 function updateUI() {
     document.documentElement.lang = currentLang;
@@ -506,7 +506,7 @@ document.addEventListener('click', e => {
 
 // Initial Setup
 window.addEventListener('DOMContentLoaded', () => {
-    updateUI();
+    fetchProducts();
     updateCartUI();
     initReveal();
 });
