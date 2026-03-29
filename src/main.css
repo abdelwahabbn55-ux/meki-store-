@@ -503,20 +503,193 @@ section {
     cursor: pointer;
 }
 
-/* Reveal Animation */
-[data-reveal] {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+/* Cart Icon */
+.cart-toggle {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    padding: 5px;
+    display: flex;
+    align-items: center;
 }
 
-[data-reveal].revealed {
-    opacity: 1;
-    transform: translateY(0);
+.cart-toggle:hover { color: var(--primary); }
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--primary);
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-@media (max-width: 768px) {
-    .hero h1 { font-size: 2.5rem; }
-    .section-title { font-size: 2rem; }
-    .whatsapp-sticky { bottom: 1.5rem; right: 1.5rem; width: 50px; height: 50px; }
+/* Cart Sidebar */
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 450px;
+    height: 100vh;
+    background: var(--bg-alt);
+    z-index: 3000;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    border-left: 1px solid rgba(255,255,255,0.05);
+}
+
+[lang="ar"] .cart-sidebar { right: auto; left: -100%; border-left: none; border-right: 1px solid rgba(255,255,255,0.05); }
+
+.cart-sidebar.active { right: 0; }
+[lang="ar"] .cart-sidebar.active { left: 0; }
+
+.cart-header {
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.cart-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+}
+
+.cart-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+.cart-item-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.cart-item-info { flex: 1; }
+.cart-item-info h4 { font-size: 1rem; margin-bottom: 0.2rem; }
+.cart-item-price { color: var(--primary); font-weight: 600; font-size: 0.9rem; }
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255,255,255,0.05);
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.cart-item-controls button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.cart-footer {
+    padding: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    background: rgba(0,0,0,0.2);
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.w-100 { width: 100%; }
+
+/* Order Form Container */
+.order-form-container {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-alt);
+    padding: 2rem;
+    display: none;
+    flex-direction: column;
+    z-index: 10;
+}
+
+.order-form-container.active { display: flex; }
+
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: white;
+    font-family: inherit;
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.form-group textarea { height: 80px; resize: none; }
+
+.empty-msg {
+    text-align: center;
+    color: var(--text-muted);
+    margin-top: 3rem;
 }

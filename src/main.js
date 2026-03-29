@@ -28,7 +28,21 @@ const translations = {
         address: "غليزان، الجزائر",
         phone: "0550 74 32 86",
         whatsapp: "واتساب: +213 550 74 32 86",
-        wa_prefix: "سلام، نحب نطلب هذا المنتج: "
+        wa_prefix: "سلام، نحب نطلب المنتجات التالية: ",
+        cart_title: "سلة المشتريات",
+        cart_empty: "السلة فارغة",
+        cart_total: "المجموع الكلي:",
+        order_now: "اطلب الآن",
+        form_title: "تأكيد الطلب",
+        full_name: "الاسم الكامل",
+        phone: "رقم الهاتف",
+        wilaya: "الولاية",
+        select_wilaya: "اختر الولاية",
+        address: "العنوان الكامل",
+        notes: "ملاحظات إضافية",
+        confirm_order: "تأكيد وإرسال عبر واتساب",
+        add_to_cart: "إضافة للسلة",
+        added: "تمت الإضافة!"
     },
     fr: {
         logo: "Makki Hardware",
@@ -59,7 +73,21 @@ const translations = {
         address: "Relizane, Algérie",
         phone: "0550 74 32 86",
         whatsapp: "WhatsApp: +213 550 74 32 86",
-        wa_prefix: "Bonjour, je voudrais commander ce produit : "
+        wa_prefix: "Bonjour, je voudrais commander ces produits : ",
+        cart_title: "Panier",
+        cart_empty: "Le panier est vide",
+        cart_total: "Total :",
+        order_now: "Commander maintenant",
+        form_title: "Confirmation",
+        full_name: "Nom Complet",
+        phone: "Numéro de téléphone",
+        wilaya: "Wilaya",
+        select_wilaya: "Sélectionnez Wilaya",
+        address: "Adresse complète",
+        notes: "Notes (Optionnel)",
+        confirm_order: "Confirmer la commande",
+        add_to_cart: "Ajouter au panier",
+        added: "Ajouté!"
     },
     en: {
         logo: "Makki Hardware",
@@ -90,7 +118,21 @@ const translations = {
         address: "Relizane, Algeria",
         phone: "0550 74 32 86",
         whatsapp: "WhatsApp: +213 550 74 32 86",
-        wa_prefix: "Hello, I would like to order this product: "
+        wa_prefix: "Hello, I would like to order these products: ",
+        cart_title: "Shopping Cart",
+        cart_empty: "Your cart is empty",
+        cart_total: "Total Amount:",
+        order_now: "Check Out",
+        form_title: "Order Details",
+        full_name: "Full Name",
+        phone: "Phone Number",
+        wilaya: "Wilaya",
+        select_wilaya: "Select Wilaya",
+        address: "Full Address",
+        notes: "Notes (Optional)",
+        confirm_order: "Confirm Order",
+        add_to_cart: "Add to Cart",
+        added: "Added!"
     }
 };
 
@@ -156,8 +198,8 @@ function renderProducts() {
             <div class="product-info">
                 <h3>${p.name[currentLang]}</h3>
                 <p class="product-price">${p.price}</p>
-                <button class="btn btn-primary order-btn" data-id="${p.id}">
-                    ${translations[currentLang].order_wa}
+                <button class="btn btn-primary add-to-cart" data-id="${p.id}">
+                    ${translations[currentLang].add_to_cart}
                 </button>
             </div>
         `;
@@ -215,20 +257,154 @@ document.querySelectorAll('[data-lang]').forEach(btn => {
     });
 });
 
-// WhatsApp Order Logic
+// Cart Logic
+let cart = JSON.parse(localStorage.getItem('makki_cart')) || [];
+
+function saveCart() {
+    localStorage.setItem('makki_cart', JSON.stringify(cart));
+    updateCartUI();
+}
+
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const existing = cart.find(item => item.id === productId);
+    
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
+    saveCart();
+    openCart();
+}
+
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    saveCart();
+}
+
+function updateQuantity(productId, delta) {
+    const item = cart.find(i => i.id === productId);
+    if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+            removeFromCart(productId);
+        } else {
+            saveCart();
+        }
+    }
+}
+
+function calculateTotal() {
+    return cart.reduce((total, item) => {
+        const price = parseInt(item.price.replace(/[^0-9]/g, ''));
+        return total + (price * item.quantity);
+    }, 0);
+}
+
+function updateCartUI() {
+    const countEl = document.getElementById('cart-count');
+    const itemsEl = document.getElementById('cart-items');
+    const totalEl = document.getElementById('total-price');
+    
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    countEl.textContent = count;
+    
+    if (cart.length === 0) {
+        itemsEl.innerHTML = `<p class="empty-msg" data-i18n="cart_empty">${translations[currentLang].cart_empty}</p>`;
+        totalEl.textContent = '0 DZD';
+        return;
+    }
+    
+    itemsEl.innerHTML = cart.map(item => `
+        <div class="cart-item">
+            <img src="${item.img}" alt="${item.name[currentLang]}" class="cart-item-img">
+            <div class="cart-item-info">
+                <h4>${item.name[currentLang]}</h4>
+                <p class="cart-item-price">${item.price}</p>
+            </div>
+            <div class="cart-item-controls">
+                <button onclick="updateQuantity(${item.id}, -1)">-</button>
+                <span>${item.quantity}</span>
+                <button onclick="updateQuantity(${item.id}, 1)">+</button>
+            </div>
+        </div>
+    `).join('');
+    
+    totalEl.textContent = calculateTotal().toLocaleString() + ' DZD';
+}
+
+function openCart() {
+    document.getElementById('cart-sidebar').classList.add('active');
+}
+
+function closeCart() {
+    document.getElementById('cart-sidebar').classList.remove('active');
+    document.getElementById('order-form-container').classList.remove('active');
+}
+
+// Global exposure for onclick
+window.updateQuantity = updateQuantity;
+
+// Event Listeners for Cart
+document.getElementById('cart-toggle').addEventListener('click', openCart);
+document.getElementById('cart-close').addEventListener('click', closeCart);
+document.getElementById('checkout-btn').addEventListener('click', () => {
+    if (cart.length > 0) {
+        document.getElementById('order-form-container').classList.add('active');
+    }
+});
+document.getElementById('back-to-cart').addEventListener('click', () => {
+    document.getElementById('order-form-container').classList.remove('active');
+});
+
+// WhatsApp Message Generator
+document.getElementById('order-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const name = document.getElementById('cust-name').value;
+    const phone = document.getElementById('cust-phone').value;
+    const wilaya = document.getElementById('cust-wilaya').value;
+    const address = document.getElementById('cust-address').value;
+    const notes = document.getElementById('cust-notes').value;
+    
+    let itemsList = cart.map(item => `- ${item.name[currentLang]} (x${item.quantity}) : ${item.price}`).join('\n');
+    let total = calculateTotal().toLocaleString() + ' DZD';
+    
+    const message = `🛒 *طلب جديد من مكي للخردوات*
+--------------------------
+${itemsList}
+--------------------------
+*المجموع:* ${total}
+--------------------------
+👤 *الاسم:* ${name}
+📞 *الهاتف:* ${phone}
+📍 *الولاية:* ${wilaya}
+🏠 *العنوان:* ${address}
+📝 *ملاحظات:* ${notes || 'لا يوجد'}
+`;
+    
+    const url = `https://wa.me/213550743286?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+    
+    // Clear cart after order (optional, but keep for now)
+    // cart = [];
+    // saveCart();
+    // closeCart();
+});
+
+// Update WhatsApp Order Logic for "Add to Cart"
 document.addEventListener('click', e => {
-    if (e.target.classList.contains('order-btn')) {
-        const id = e.target.getAttribute('data-id');
-        const p = products.find(x => x.id == id);
-        const text = `${translations[currentLang].wa_prefix}${p.name[currentLang]} (${p.price})`;
-        const url = `https://wa.me/213550743286?text=${encodeURIComponent(text)}`;
-        window.open(url, '_blank');
+    if (e.target.classList.contains('add-to-cart')) {
+        const id = parseInt(e.target.getAttribute('data-id'));
+        addToCart(id);
     }
 });
 
 // Initial Setup
 window.addEventListener('DOMContentLoaded', () => {
     updateUI();
+    updateCartUI();
     initReveal();
 });
 
