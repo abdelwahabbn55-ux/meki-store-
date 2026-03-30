@@ -215,18 +215,29 @@ function renderCategoryFilter() {
 
 // Default fallback images mapped by common Arabic category keywords
 const CATEGORY_FALLBACKS = [
-    { keywords: ['أدوات', 'tool', 'outil'],      img: 'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&q=80&w=800' },
-    { keywords: ['تنظيف', 'clean', 'nettoyage'],  img: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800' },
-    { keywords: ['أقفال', 'lock', 'serrure'],      img: 'https://images.unsplash.com/photo-1509148003664-9669e46a51cc?auto=format&fit=crop&q=80&w=800' },
-    { keywords: ['منزل', 'home', 'maison'],        img: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=800' },
+    { keywords: ['أدوات', 'tool', 'outil'],     img: 'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=800&q=80' },
+    { keywords: ['تنظيف', 'clean', 'nettoyage'], img: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80' },
+    { keywords: ['أقفال', 'lock', 'serrure'],    img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80' },
+    { keywords: ['منزل', 'home', 'maison'],      img: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&q=80' },
 ];
 
-function getCategoryFallback(cat) {
-    const combined = `${cat.name_ar} ${cat.name_fr} ${cat.name_en}`.toLowerCase();
-    for (const entry of CATEGORY_FALLBACKS) {
-        if (entry.keywords.some(k => combined.includes(k))) return entry.img;
+// Global fallback handler called from onerror HTML attribute (fires even before JS listeners attach)
+window.__catImgFallback = function(img) {
+    img.onerror = null;
+    const fi = parseInt(img.dataset.fi);
+    img.src = CATEGORY_FALLBACKS[fi] ? CATEGORY_FALLBACKS[fi].img : CATEGORY_FALLBACKS[3].img;
+};
+
+function getCategoryFallbackIndex(cat) {
+    const combined = `${cat.name_ar || ''} ${cat.name_fr || ''} ${cat.name_en || ''}`.toLowerCase();
+    for (let i = 0; i < CATEGORY_FALLBACKS.length; i++) {
+        if (CATEGORY_FALLBACKS[i].keywords.some(k => combined.includes(k))) return i;
     }
-    return 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=800';
+    return 3; // default: home
+}
+
+function getCategoryFallback(cat) {
+    return CATEGORY_FALLBACKS[getCategoryFallbackIndex(cat)].img;
 }
 
 function renderMainCategories() {
@@ -239,24 +250,18 @@ function renderMainCategories() {
     }
 
     grid.innerHTML = categories.map(c => {
-        const imgSrc = c.image_url && c.image_url.trim() !== '' ? c.image_url : getCategoryFallback(c);
-        const fallbackSrc = getCategoryFallback(c);
+        const fi = getCategoryFallbackIndex(c);
+        const imgSrc = c.image_url && c.image_url.trim() !== '' && c.image_url !== 'null'
+            ? c.image_url
+            : CATEGORY_FALLBACKS[fi].img;
         return `
         <div class="category-card" data-reveal style="cursor: pointer;" onclick="document.querySelector('.filter-pill[data-id=\\'${c.id}\\']')?.click(); document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
-            <img src="${imgSrc}" alt="${c[`name_${currentLang}`]}" loading="lazy" data-fallback="${fallbackSrc}" class="cat-img">
+            <img src="${imgSrc}" alt="${c[`name_${currentLang}`]}" loading="lazy" data-fi="${fi}" onerror="window.__catImgFallback(this)">
             <div class="category-info">
                 <h3>${c[`name_${currentLang}`]}</h3>
             </div>
         </div>`;
     }).join('');
-
-    // Attach onerror via JS to avoid & encoding issues inside HTML attributes
-    grid.querySelectorAll('img.cat-img').forEach(img => {
-        img.onerror = function() {
-            this.onerror = null;
-            this.src = this.dataset.fallback;
-        };
-    });
 
     initReveal();
 }
