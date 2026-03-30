@@ -25,7 +25,7 @@ async function checkAuth() {
     if (session) {
         if (isLoginPage) window.location.href = 'admin.html';
         if (isAdminPage && adminLayout) {
-            adminLayout.style.display = 'grid';
+            adminLayout.style.display = ''; // Let CSS handle 'grid' vs 'block' responsiveness
             initDashboard();
         }
     } else {
