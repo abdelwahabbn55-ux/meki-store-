@@ -147,8 +147,8 @@ function renderProducts(products) {
 }
 
 // Search & Filter
-productSearch.addEventListener('input', filterProducts);
-categoryFilter.addEventListener('change', filterProducts);
+productSearch?.addEventListener('input', filterProducts);
+categoryFilter?.addEventListener('change', filterProducts);
 
 function filterProducts() {
     const query = productSearch.value.toLowerCase();
@@ -166,8 +166,8 @@ function filterProducts() {
 const productModal = document.getElementById('product-modal');
 const productForm = document.getElementById('product-form');
 
-document.getElementById('open-add-product-modal').onclick = () => openProductModal();
-document.getElementById('close-product-modal').onclick = () => productModal.classList.remove('active');
+if (document.getElementById('open-add-product-modal')) document.getElementById('open-add-product-modal').onclick = () => openProductModal();
+if (document.getElementById('close-product-modal')) document.getElementById('close-product-modal').onclick = () => productModal.classList.remove('active');
 
 async function openProductModal(id = null) {
     productForm.reset();
@@ -187,7 +187,7 @@ async function openProductModal(id = null) {
     productModal.classList.add('active');
 }
 
-productForm.onsubmit = async (e) => {
+if (productForm) productForm.onsubmit = async (e) => {
     e.preventDefault();
     const btn = productForm.querySelector('button[type="submit"]');
     btn.disabled = true;
@@ -271,8 +271,8 @@ function renderCategories(cats) {
     });
 }
 
-document.getElementById('open-add-category-modal').onclick = () => openCategoryModal();
-document.getElementById('close-category-modal').onclick = () => categoryModal.classList.remove('active');
+if (document.getElementById('open-add-category-modal')) document.getElementById('open-add-category-modal').onclick = () => openCategoryModal();
+if (document.getElementById('close-category-modal')) document.getElementById('close-category-modal').onclick = () => categoryModal.classList.remove('active');
 
 function openCategoryModal(id = null) {
     categoryForm.reset();
@@ -286,7 +286,7 @@ function openCategoryModal(id = null) {
     categoryModal.classList.add('active');
 }
 
-categoryForm.onsubmit = async (e) => {
+if (categoryForm) categoryForm.onsubmit = async (e) => {
     e.preventDefault();
     const id = document.getElementById('edit-category-id').value;
     const cData = {
@@ -387,7 +387,7 @@ async function openOrderDetails(id) {
     orderDetailsModal.classList.add('active');
 }
 
-document.getElementById('close-order-modal').onclick = () => orderDetailsModal.classList.remove('active');
+if (document.getElementById('close-order-modal')) document.getElementById('close-order-modal').onclick = () => orderDetailsModal.classList.remove('active');
 
 // --- LOGOUT ---
 if (logoutBtn) {
