@@ -39,8 +39,10 @@ const translations = {
         confirm_order: "تأكيد الطلب وإرسال",
         add_to_cart: "إضافة للسلة",
         added: "تمت الإضافة!",
-        success_title: "شكراً لك! تم استلام طلبك.",
-        success_subtitle: "سيتم توجيهك الآن إلى واتساب لتأكيد الطلب مع الإدارة.",
+        success_title: "شكراً لك! تم استلام طلبك بنجاح.",
+        success_subtitle: "كيف تريد تأكيد طلبك؟",
+        confirm_whatsapp: "تأكيد عبر واتساب",
+        confirm_site: "✅ تم الطلب — العودة للمتجر",
         back_to_shop: "العودة للمتجر"
     },
     fr: {
@@ -84,7 +86,9 @@ const translations = {
         add_to_cart: "Ajouter au panier",
         added: "Ajouté!",
         success_title: "Merci! Commande reçue.",
-        success_subtitle: "Vous allez être redirigé vers WhatsApp pour confirmer.",
+        success_subtitle: "Comment voulez-vous confirmer?",
+        confirm_whatsapp: "Confirmer via WhatsApp",
+        confirm_site: "✅ Commande envoyée — Retour",
         back_to_shop: "Retour au magasin"
     },
     en: {
@@ -128,7 +132,9 @@ const translations = {
         add_to_cart: "Add to Cart",
         added: "Added!",
         success_title: "Thank you! Order received.",
-        success_subtitle: "Redirecting to WhatsApp to confirm your order.",
+        success_subtitle: "How would you like to confirm?",
+        confirm_whatsapp: "Confirm via WhatsApp",
+        confirm_site: "✅ Order placed — Back to Shop",
         back_to_shop: "Back to Shop"
     }
 };
@@ -383,6 +389,8 @@ function closeCart() {
 }
 
 // --- ORDER SUBMISSION ---
+let lastOrderData = null; // Store for WhatsApp button
+
 document.getElementById('order-form').onsubmit = async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button');
@@ -399,12 +407,13 @@ document.getElementById('order-form').onsubmit = async (e) => {
         status: 'Pending'
     };
 
-    // 1. Insert Order
+    // 1. Insert Order to database
     const { data: order, error: oError } = await supabase.from('orders').insert([orderData]).select().single();
     
     if (oError) {
         alert("Error saving order: " + oError.message);
         btn.disabled = false;
+        btn.textContent = translations[currentLang].confirm_order;
         return;
     }
 
@@ -418,16 +427,18 @@ document.getElementById('order-form').onsubmit = async (e) => {
 
     await supabase.from('order_items').insert(itemsData);
 
-    // 3. WhatsApp Redirect
-    sendWhatsApp(orderData);
+    // 3. Save order data for WhatsApp button
+    lastOrderData = orderData;
 
-    // 4. Success UI
+    // 4. Show success overlay with two choices
     showSuccess();
 };
 
-function sendWhatsApp(data) {
-    let itemsText = cart.map(i => `- ${i.name[currentLang]} (x${i.quantity})`).join('\n');
-    const msg = `🛒 *طلب جديد #${Date.now().toString().slice(-4)}*
+function buildWhatsAppMsg(data) {
+    let itemsText = cart.length > 0
+        ? cart.map(i => `- ${i.name[currentLang]} (x${i.quantity})`).join('\n')
+        : '(items already cleared)';
+    return `🛒 *طلب جديد*
 --------------------------
 ${itemsText}
 --------------------------
@@ -438,16 +449,30 @@ ${itemsText}
 🏠 *العنوان:* ${data.address}
 📞 *الهاتف:* ${data.phone}
 📝 *ملاحظات:* ${data.notes || 'لا يوجد'}`;
-
-    window.open(`https://wa.me/213550743286?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
 function showSuccess() {
-    cart = [];
-    saveCart();
     closeCart();
     document.getElementById('order-success-overlay').classList.add('active');
 }
+
+// WhatsApp button — opens WhatsApp then reloads
+document.getElementById('confirm-whatsapp').onclick = () => {
+    if (lastOrderData) {
+        const msg = buildWhatsAppMsg(lastOrderData);
+        window.open(`https://wa.me/213550743286?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+    cart = [];
+    saveCart();
+    setTimeout(() => window.location.reload(), 500);
+};
+
+// Site-only button — just reload
+document.getElementById('confirm-site-only').onclick = () => {
+    cart = [];
+    saveCart();
+    window.location.reload();
+};
 
 // --- WILAYA DROPDOWN (Enhanced) ---
 const wilayas = [

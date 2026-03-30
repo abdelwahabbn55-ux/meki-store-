@@ -1104,31 +1104,93 @@ section {
 /* Responsive Sidebar */
 @media (max-width: 1024px) {
     .admin-layout { grid-template-columns: 80px 1fr; }
-    .sidebar-logo span, .nav-item span { display: none; }
+    .sidebar-logo span, .nav-item span, .nav-item-logout span { display: none; }
+    .sidebar-logo { padding-inline-start: 0; justify-content: center; }
     .admin-sidebar { padding: 1.5rem 0.5rem; align-items: center; }
-    .nav-item { justify-content: center; width: 50px; }
+    .nav-item, .nav-item-logout { justify-content: center; width: 50px; padding: 1rem; margin: 0 auto; }
 }
 
 @media (max-width: 768px) {
     .admin-layout { display: block; }
+    
     .admin-sidebar { 
         position: fixed; 
+        top: auto; 
         bottom: 0; 
         left: 0; 
         width: 100%; 
-        height: 60px; 
+        height: auto; 
         flex-direction: row; 
         padding: 0; 
         z-index: 1000;
         border-inline-end: none;
         border-top: 1px solid rgba(255,255,255,0.1);
-        justify-content: space-around;
-        gap: 0;
+        justify-content: space-between;
+        align-items: stretch;
     }
+    
     .sidebar-logo { display: none; }
-    .admin-nav { flex-direction: row; width: 100%; justify-content: space-around; }
-    .admin-main { padding: 1.5rem; padding-bottom: 80px; }
-    .stat-grid { grid-template-columns: 1fr; }
+    
+    .sidebar-footer {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: none;
+        display: flex;
+    }
+
+    .admin-nav { 
+        flex-direction: row; 
+        flex: 1; 
+        justify-content: space-around; 
+    }
+    
+    .nav-item, .nav-item-logout {
+        padding: 1rem 0;
+        flex: 1;
+        width: auto;
+        border-radius: 0;
+        margin: 0;
+    }
+    
+    .nav-item-logout {
+        border-inline-start: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .admin-main { padding: 1rem; padding-bottom: 80px; }
+    .stat-grid { grid-template-columns: 1fr; gap: 1rem; }
+    
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .admin-header .btn { width: 100%; justify-content: center; }
+    
+    .card-table {
+        margin-inline: -1rem;
+        border-radius: 0;
+        border-inline: none;
+    }
+    
+    .table-wrapper {
+        border-radius: 0;
+    }
+    
+    .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .table-header > div {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .table-header input, .table-header select {
+        max-width: 100% !important;
+    }
 }
 
 /* Modals */
