@@ -136,7 +136,7 @@ const translations = {
     }
 };
 
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
 const SUPABASE_URL = 'https://wrnmoasijmodwdukfnsn.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indybm1vYXNpam1vZHdvZHVrZnNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MTUwMTksImV4cCI6MjA5MDM5MTAxOX0.QNac6cWE-cIIBuLzty6asicegtunJ7GBpWBO9AILG7A';
