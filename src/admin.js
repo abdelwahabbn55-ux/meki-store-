@@ -249,10 +249,30 @@ async function loadAdminCategories() {
     renderCategories(allCategories);
 }
 
+// Category image fallbacks (same as storefront)
+const ADMIN_CAT_FALLBACKS = [
+    { keywords: ['أدوات', 'tool', 'outil'],      img: 'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=800&q=80' },
+    { keywords: ['تنظيف', 'clean', 'nettoyage'], img: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80' },
+    { keywords: ['أقفال', 'lock', 'serrure'],    img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80' },
+    { keywords: ['منزل', 'home', 'maison'],      img: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&q=80' },
+];
+
+function getAdminCatFallback(c) {
+    const combined = `${c.name_ar || ''} ${c.name_fr || ''} ${c.name_en || ''}`.toLowerCase();
+    for (const entry of ADMIN_CAT_FALLBACKS) {
+        if (entry.keywords.some(k => combined.includes(k))) return entry.img;
+    }
+    return ADMIN_CAT_FALLBACKS[3].img;
+}
+
 function renderCategories(cats) {
-    categoryList.innerHTML = cats.map(c => `
+    categoryList.innerHTML = cats.map(c => {
+        const imgSrc = c.image_url && c.image_url.trim() !== '' && c.image_url !== 'null'
+            ? c.image_url
+            : getAdminCatFallback(c);
+        return `
         <tr>
-            <td><img src="${c.image_url || ''}" class="product-thumb" style="object-fit: cover;"></td>
+            <td><img src="${imgSrc}" class="product-thumb cat-thumb" data-fallback="${getAdminCatFallback(c).replace(/&/g, '&amp;')}" style="object-fit: cover;"></td>
             <td>${c.name_ar}</td>
             <td>${c.name_fr}</td>
             <td>${c.name_en}</td>
@@ -261,9 +281,17 @@ function renderCategories(cats) {
                 <button class="btn-icon edit-cat" data-id="${c.id}"><i class="fas fa-edit"></i></button>
                 <button class="btn-icon delete delete-cat" data-id="${c.id}"><i class="fas fa-trash"></i></button>
             </td>
-        </tr>
-    `).join('');
-    
+        </tr>`;
+    }).join('');
+
+    // Attach onerror via JS to safely handle & in URLs
+    document.querySelectorAll('img.cat-thumb').forEach(img => {
+        img.onerror = function() {
+            this.onerror = null;
+            this.src = this.dataset.fallback.replace(/&amp;/g, '&');
+        };
+    });
+
     document.querySelectorAll('.delete-cat').forEach(btn => {
         btn.onclick = () => deleteCategory(btn.dataset.id);
     });
