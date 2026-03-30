@@ -252,6 +252,7 @@ async function loadAdminCategories() {
 function renderCategories(cats) {
     categoryList.innerHTML = cats.map(c => `
         <tr>
+            <td><img src="${c.image_url || ''}" class="product-thumb" style="object-fit: cover;"></td>
             <td>${c.name_ar}</td>
             <td>${c.name_fr}</td>
             <td>${c.name_en}</td>
@@ -288,11 +289,27 @@ function openCategoryModal(id = null) {
 
 if (categoryForm) categoryForm.onsubmit = async (e) => {
     e.preventDefault();
+    const btn = categoryForm.querySelector('button[type="submit"]');
+    btn.disabled = true;
+
     const id = document.getElementById('edit-category-id').value;
+    const file = document.getElementById('c-image').files[0];
+    let imageUrl = id ? allCategories.find(x => x.id == id).image_url : null;
+
+    if (file) {
+        const fileName = `cat_${Date.now()}_${file.name}`;
+        const { error: uploadError } = await supabase.storage.from('products').upload(fileName, file);
+        if (!uploadError) {
+            const { data: { publicUrl } } = supabase.storage.from('products').getPublicUrl(fileName);
+            imageUrl = publicUrl;
+        }
+    }
+
     const cData = {
         name_ar: document.getElementById('c-name-ar').value,
         name_fr: document.getElementById('c-name-fr').value,
         name_en: document.getElementById('c-name-en').value,
+        image_url: imageUrl
     };
     
     const { error } = id 
@@ -303,7 +320,10 @@ if (categoryForm) categoryForm.onsubmit = async (e) => {
         categoryModal.classList.remove('active');
         loadAdminCategories();
         loadCategoriesForSelect();
+    } else {
+        alert('حدث خطأ أثناء حفظ التصنيف');
     }
+    btn.disabled = false;
 };
 
 async function deleteCategory(id) {

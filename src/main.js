@@ -162,6 +162,7 @@ async function fetchCategories() {
     if (!error) {
         categories = data;
         renderCategoryFilter();
+        renderMainCategories();
     }
 }
 
@@ -210,6 +211,26 @@ function renderCategoryFilter() {
             fetchProducts();
         };
     });
+}
+
+function renderMainCategories() {
+    const grid = document.getElementById('main-category-grid');
+    if (!grid) return;
+
+    if (categories.length === 0) {
+        grid.innerHTML = '<p style="text-align: center; color: var(--text-muted); grid-column: 1/-1;">لا توجد أصناف حالياً</p>';
+        return;
+    }
+
+    grid.innerHTML = categories.map(c => `
+        <div class="category-card" data-reveal style="cursor: pointer;" onclick="document.querySelector('.filter-pill[data-id=\\'${c.id}\\']')?.click(); document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
+            <img src="${c.image_url || 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=800'}" alt="${c[`name_${currentLang}`]}" loading="lazy">
+            <div class="category-info">
+                <h3>${c[`name_${currentLang}`]}</h3>
+            </div>
+        </div>
+    `).join('');
+    initReveal();
 }
 
 function renderProducts() {
