@@ -1258,7 +1258,59 @@ section {
     box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
 }
 
-/* --- SUCCESS MESSAGE --- */
+/* Admin Form Controls */
+.admin-main i, .admin-modal i { margin-inline-end: 0.5rem; }
+
+input[type="text"], 
+input[type="number"], 
+input[type="file"],
+select, 
+textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: #1a1e26;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: #fff;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: #212630;
+    box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.1);
+}
+
+select option {
+    background: #161a21;
+    color: #fff;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+/* Success Overlay (Updated) */
 .order-success-overlay {
     position: fixed;
     inset: 0;
