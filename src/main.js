@@ -213,6 +213,22 @@ function renderCategoryFilter() {
     });
 }
 
+// Default fallback images mapped by common Arabic category keywords
+const CATEGORY_FALLBACKS = [
+    { keywords: ['أدوات', 'tool', 'outil'],      img: 'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&q=80&w=800' },
+    { keywords: ['تنظيف', 'clean', 'nettoyage'],  img: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800' },
+    { keywords: ['أقفال', 'lock', 'serrure'],      img: 'https://images.unsplash.com/photo-1509148003664-9669e46a51cc?auto=format&fit=crop&q=80&w=800' },
+    { keywords: ['منزل', 'home', 'maison'],        img: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=800' },
+];
+
+function getCategoryFallback(cat) {
+    const combined = `${cat.name_ar} ${cat.name_fr} ${cat.name_en}`.toLowerCase();
+    for (const entry of CATEGORY_FALLBACKS) {
+        if (entry.keywords.some(k => combined.includes(k))) return entry.img;
+    }
+    return 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=800';
+}
+
 function renderMainCategories() {
     const grid = document.getElementById('main-category-grid');
     if (!grid) return;
@@ -222,14 +238,17 @@ function renderMainCategories() {
         return;
     }
 
-    grid.innerHTML = categories.map(c => `
+    grid.innerHTML = categories.map(c => {
+        const imgSrc = c.image_url && c.image_url.trim() !== '' ? c.image_url : getCategoryFallback(c);
+        const fallbackSrc = getCategoryFallback(c);
+        return `
         <div class="category-card" data-reveal style="cursor: pointer;" onclick="document.querySelector('.filter-pill[data-id=\\'${c.id}\\']')?.click(); document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
-            <img src="${c.image_url || 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=800'}" alt="${c[`name_${currentLang}`]}" loading="lazy">
+            <img src="${imgSrc}" alt="${c[`name_${currentLang}`]}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackSrc}'">
             <div class="category-info">
                 <h3>${c[`name_${currentLang}`]}</h3>
             </div>
-        </div>
-    `).join('');
+        </div>`;
+    }).join('');
     initReveal();
 }
 
