@@ -39,8 +39,8 @@
                 </div>
             </nav>
 
-            <div style="margin-top: auto;">
-                <div class="nav-item" id="logout-btn">
+            <div class="sidebar-footer">
+                <div class="nav-item-logout" id="logout-btn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>تسجيل الخروج</span>
                 </div>
@@ -54,7 +54,10 @@
                 <header class="admin-header">
                     <div class="header-title">
                         <h1>لوحة التحكم</h1>
-                        <p>نظرة عامة على أداء متجرك اليوم</p>
+                        <p id="admin-welcome-msg">مرحباً بك مجدداً، مكي</p>
+                    </div>
+                    <div class="header-date" id="current-date">
+                        <!-- Injected -->
                     </div>
                 </header>
 
@@ -152,7 +155,7 @@
                 <header class="admin-header">
                     <div class="header-title">
                         <h1>التصنيفات</h1>
-                        <p>تنظيم المنتجات في مجموعات</p>
+                        <p>هنا يمكنك التحكم في الأقسام التي تظهر في الصفحة الرئيسية (مثل: أدوات، تنظيف، إلخ)</p>
                     </div>
                     <button class="btn btn-primary" id="open-add-category-modal">
                         <i class="fas fa-plus"></i> إضافة تصنيف

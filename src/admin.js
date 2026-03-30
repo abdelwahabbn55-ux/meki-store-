@@ -64,8 +64,21 @@ function loadSectionData(sectionId) {
 
 // --- DASHBOARD ---
 async function initDashboard() {
+    updateDashboardHeader();
     loadDashboardStats();
     loadCategoriesForSelect(); // Preload for product modal
+}
+
+function updateDashboardHeader() {
+    const dateEl = document.getElementById('current-date');
+    if (dateEl) {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateEl.innerHTML = `
+            <span style="color: #fff; font-weight: 600;">${now.toLocaleDateString('ar-DZ', options)}</span>
+            <span style="font-size: 0.8rem;">${now.toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' })}</span>
+        `;
+    }
 }
 
 async function loadDashboardStats() {
@@ -377,10 +390,18 @@ async function openOrderDetails(id) {
 document.getElementById('close-order-modal').onclick = () => orderDetailsModal.classList.remove('active');
 
 // --- LOGOUT ---
-logoutBtn.addEventListener('click', async () => {
-    await supabase.auth.signOut();
-    window.location.href = 'login.html';
-});
+if (logoutBtn) {
+    logoutBtn.onclick = async () => {
+        const { error } = await supabase.auth.signOut();
+        if (!error) {
+            window.location.href = 'login.html';
+        } else {
+            console.error('Logout error:', error);
+            // Fallback: forcefully redirect
+            window.location.href = 'login.html';
+        }
+    };
+}
 
 // --- INIT ---
 checkAuth();
