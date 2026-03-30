@@ -138,8 +138,8 @@ const translations = {
 
 import { createClient } from '@supabase/supabase-js';
 
-const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL = 'https://wrnmoasijmodwdukfnsn.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indybm1vYXNpam1vZHdvZHVrZnNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MTUwMTksImV4cCI6MjA5MDM5MTAxOX0.QNac6cWE-cIIBuLzty6asicegtunJ7GBpWBO9AILG7A';
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let products = [];
@@ -330,7 +330,7 @@ function saveCart() {
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
     const existing = cart.find(item => item.id === productId);
-    
+
     if (existing) {
         existing.quantity += 1;
     } else {
@@ -368,16 +368,16 @@ function updateCartUI() {
     const countEl = document.getElementById('cart-count');
     const itemsEl = document.getElementById('cart-items');
     const totalEl = document.getElementById('total-price');
-    
+
     const count = cart.reduce((sum, item) => sum + item.quantity, 0);
     countEl.textContent = count;
-    
+
     if (cart.length === 0) {
         itemsEl.innerHTML = `<p class="empty-msg" data-i18n="cart_empty">${translations[currentLang].cart_empty}</p>`;
         totalEl.textContent = '0 DZD';
         return;
     }
-    
+
     itemsEl.innerHTML = cart.map(item => `
         <div class="cart-item">
             <img src="${item.img}" alt="${item.name[currentLang]}" class="cart-item-img">
@@ -392,7 +392,7 @@ function updateCartUI() {
             </div>
         </div>
     `).join('');
-    
+
     totalEl.textContent = calculateTotal().toLocaleString() + ' DZD';
 }
 
@@ -432,7 +432,7 @@ function setupWilayaDropdown() {
             ${w[currentLang]} (${w.id})
         </div>
     `).join('');
-    
+
     document.querySelectorAll('.select-option').forEach(option => {
         option.addEventListener('click', () => {
             const val = option.getAttribute('data-value');
@@ -456,7 +456,7 @@ document.addEventListener('click', (e) => {
 
 // Update updateUI to include Wilaya setup
 const originalUpdateUI = updateUI;
-updateUI = function() {
+updateUI = function () {
     originalUpdateUI();
     setupWilayaDropdown();
 };
@@ -464,16 +464,16 @@ updateUI = function() {
 // WhatsApp Message Generator
 document.getElementById('order-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    
+
     const name = document.getElementById('cust-name').value;
     const phone = document.getElementById('cust-phone').value;
     const wilaya = document.getElementById('cust-wilaya').value;
     const address = document.getElementById('cust-address').value;
     const notes = document.getElementById('cust-notes').value;
-    
+
     let itemsList = cart.map(item => `- ${item.name[currentLang]} (x${item.quantity}) : ${item.price}`).join('\n');
     let total = calculateTotal().toLocaleString() + ' DZD';
-    
+
     const message = `🛒 *طلب جديد من مكي للخردوات*
 --------------------------
 ${itemsList}
@@ -486,10 +486,10 @@ ${itemsList}
 🏠 *العنوان:* ${address}
 📝 *ملاحظات:* ${notes || 'لا يوجد'}
 `;
-    
+
     const url = `https://wa.me/213550743286?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
-    
+
     // Clear cart after order (optional, but keep for now)
     // cart = [];
     // saveCart();

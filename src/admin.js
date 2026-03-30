@@ -2,8 +2,8 @@ import { createClient } from '@supabase/supabase-js';
 
 // --- SUPABASE CONFIGURATION ---
 // Replace these with your own Supabase project values
-const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL = 'https://wrnmoasijmodwdukfnsn.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indybm1vYXNpam1vZHdvZHVrZnNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MTUwMTksImV4cCI6MjA5MDM5MTAxOX0.QNac6cWE-cIIBuLzty6asicegtunJ7GBpWBO9AILG7A';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -18,7 +18,7 @@ const logoutBtn = document.getElementById('logout-btn');
 // --- AUTH CHECK ---
 async function checkAuth() {
     const { data: { session } } = await supabase.auth.getSession();
-    
+
     const isLoginPage = window.location.pathname.includes('login.html');
     const isAdminPage = window.location.pathname.includes('admin.html');
 
@@ -71,7 +71,7 @@ async function fetchAdminProducts() {
     }
 
     document.getElementById('total-count').textContent = data.length;
-    
+
     productList.innerHTML = data.map(p => `
         <tr>
             <td><img src="${p.image_url}" class="thumb"></td>
