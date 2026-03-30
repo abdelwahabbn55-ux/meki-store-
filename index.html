@@ -90,6 +90,12 @@
     <section id="products" class="products">
         <div class="container">
             <h2 class="section-title text-center" data-i18n="products_title" data-reveal>منتجات مختارة</h2>
+            
+            <!-- Category Filter Bar [NEW] -->
+            <div id="category-filter-bar" class="category-filter-bar" data-reveal>
+                <!-- Categories injected by JS -->
+            </div>
+
             <div class="product-grid" id="product-list">
                 <!-- Products will be injected by main.js -->
             </div>
@@ -209,6 +215,16 @@
             <div class="modal-body">
                 <!-- Modal content will be injected -->
             </div>
+        </div>
+    </div>
+
+    <!-- Success Overlay -->
+    <div id="order-success-overlay" class="order-success-overlay">
+        <div class="success-card">
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+            <h2 id="success-title">شكراً لك! تم استلام طلبك بنجاح.</h2>
+            <p id="success-subtitle" style="margin-bottom: 2rem; color: var(--text-muted);">سيتم توجيهك الآن إلى واتساب لتأكيد طلبك.</p>
+            <button class="btn btn-primary" onclick="window.location.reload()">العودة للمتجر</button>
         </div>
     </div>
 
