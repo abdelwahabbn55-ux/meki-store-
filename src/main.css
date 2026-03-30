@@ -1078,6 +1078,103 @@ section {
     .stat-grid { grid-template-columns: 1fr; }
 }
 
+/* Modals */
+.admin-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 2rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.admin-modal.active {
+    display: flex;
+}
+
+.modal-body {
+    background: #161a21;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 20px;
+    padding: 2.5rem;
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-body h2 {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+/* Order Details Specifics */
+.order-modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 2.5rem;
+}
+
+@media (max-width: 768px) {
+    .order-modal-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+.order-customer-info h4, .order-items-column h4 {
+    color: var(--primary);
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-row {
+    margin-bottom: 1rem;
+}
+
+.info-row label {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+}
+
+.info-row div {
+    font-size: 0.95rem;
+    color: #fff;
+}
+
+.order-items-list {
+    background: rgba(255,255,255,0.02);
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid rgba(255,255,255,0.03);
+}
+
+.order-item-mini {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.9rem;
+}
+
+.order-item-mini:last-child {
+    border-bottom: none;
+}
+
+.order-item-mini span:last-child {
+    color: var(--primary);
+    font-weight: 600;
+}
+
 /* Custom Select (Wilaya) */
 .custom-select {
     position: relative;
