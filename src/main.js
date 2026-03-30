@@ -243,12 +243,21 @@ function renderMainCategories() {
         const fallbackSrc = getCategoryFallback(c);
         return `
         <div class="category-card" data-reveal style="cursor: pointer;" onclick="document.querySelector('.filter-pill[data-id=\\'${c.id}\\']')?.click(); document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
-            <img src="${imgSrc}" alt="${c[`name_${currentLang}`]}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackSrc}'">
+            <img src="${imgSrc}" alt="${c[`name_${currentLang}`]}" loading="lazy" data-fallback="${fallbackSrc}" class="cat-img">
             <div class="category-info">
                 <h3>${c[`name_${currentLang}`]}</h3>
             </div>
         </div>`;
     }).join('');
+
+    // Attach onerror via JS to avoid & encoding issues inside HTML attributes
+    grid.querySelectorAll('img.cat-img').forEach(img => {
+        img.onerror = function() {
+            this.onerror = null;
+            this.src = this.dataset.fallback;
+        };
+    });
+
     initReveal();
 }
 
@@ -296,6 +305,8 @@ function updateUI() {
     }
 
     renderCategoryFilter();
+    renderMainCategories();
+    renderProducts();
     setupWilayaDropdown();
 }
 
