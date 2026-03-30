@@ -24,7 +24,7 @@ async function checkAuth() {
 
     if (session) {
         if (isLoginPage) window.location.href = 'admin.html';
-        if (isAdminPage) {
+        if (isAdminPage && adminLayout) {
             adminLayout.style.display = 'grid';
             initDashboard();
         }
@@ -399,6 +399,32 @@ if (logoutBtn) {
             console.error('Logout error:', error);
             // Fallback: forcefully redirect
             window.location.href = 'login.html';
+        }
+    };
+}
+
+// --- LOGIN ---
+const loginForm = document.getElementById('login-form');
+if (loginForm) {
+    loginForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const errorMsg = document.getElementById('error-msg');
+        const btn = loginForm.querySelector('button');
+
+        btn.disabled = true;
+        btn.textContent = 'جاري الدخول...';
+        errorMsg.style.display = 'none';
+
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+        if (error) {
+            errorMsg.style.display = 'block';
+            btn.disabled = false;
+            btn.textContent = 'دخول';
+        } else {
+            window.location.href = 'admin.html';
         }
     };
 }
