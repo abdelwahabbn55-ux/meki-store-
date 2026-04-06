@@ -1,0 +1,814 @@
+[
+  {
+    "wilaya_code": "1",
+    "wilaya_name": "adrar",
+    "company": "zr_express",
+    "home_price": 1400,
+    "bureau_price": 970
+  },
+  {
+    "wilaya_code": "1",
+    "wilaya_name": "adrar",
+    "company": "yalidine",
+    "home_price": 1050,
+    "bureau_price": 850
+  },
+  {
+    "wilaya_code": "2",
+    "wilaya_name": "chlef",
+    "company": "zr_express",
+    "home_price": 700,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "2",
+    "wilaya_name": "chlef",
+    "company": "yalidine",
+    "home_price": 700,
+    "bureau_price": 550
+  },
+  {
+    "wilaya_code": "3",
+    "wilaya_name": "laghouat",
+    "company": "zr_express",
+    "home_price": 950,
+    "bureau_price": 670
+  },
+  {
+    "wilaya_code": "3",
+    "wilaya_name": "laghouat",
+    "company": "yalidine",
+    "home_price": 950,
+    "bureau_price": 750
+  },
+  {
+    "wilaya_code": "4",
+    "wilaya_name": "oum el bouaghi",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "4",
+    "wilaya_name": "oum el bouaghi",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "5",
+    "wilaya_name": "batna",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "5",
+    "wilaya_name": "batna",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "6",
+    "wilaya_name": "béjaïa",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "6",
+    "wilaya_name": "béjaïa",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "7",
+    "wilaya_name": "biskra",
+    "company": "zr_express",
+    "home_price": 950,
+    "bureau_price": 670
+  },
+  {
+    "wilaya_code": "7",
+    "wilaya_name": "biskra",
+    "company": "yalidine",
+    "home_price": 950,
+    "bureau_price": 750
+  },
+  {
+    "wilaya_code": "8",
+    "wilaya_name": "béchar",
+    "company": "zr_express",
+    "home_price": 1100,
+    "bureau_price": 720
+  },
+  {
+    "wilaya_code": "8",
+    "wilaya_name": "béchar",
+    "company": "yalidine",
+    "home_price": 950,
+    "bureau_price": 750
+  },
+  {
+    "wilaya_code": "9",
+    "wilaya_name": "blida",
+    "company": "zr_express",
+    "home_price": 750,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "9",
+    "wilaya_name": "blida",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "10",
+    "wilaya_name": "bouira",
+    "company": "zr_express",
+    "home_price": 750,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "10",
+    "wilaya_name": "bouira",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "11",
+    "wilaya_name": "tamanrasset",
+    "company": "zr_express",
+    "home_price": 1600,
+    "bureau_price": 1120
+  },
+  {
+    "wilaya_code": "11",
+    "wilaya_name": "tamanrasset",
+    "company": "yalidine",
+    "home_price": 1600,
+    "bureau_price": 1400
+  },
+  {
+    "wilaya_code": "12",
+    "wilaya_name": "tébessa",
+    "company": "zr_express",
+    "home_price": 850,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "12",
+    "wilaya_name": "tébessa",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "13",
+    "wilaya_name": "tlemcen",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 570
+  },
+  {
+    "wilaya_code": "13",
+    "wilaya_name": "tlemcen",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "14",
+    "wilaya_name": "tiaret",
+    "company": "zr_express",
+    "home_price": 700,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "14",
+    "wilaya_name": "tiaret",
+    "company": "yalidine",
+    "home_price": 700,
+    "bureau_price": 550
+  },
+  {
+    "wilaya_code": "15",
+    "wilaya_name": "tizi ouzou",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "15",
+    "wilaya_name": "tizi ouzou",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "16",
+    "wilaya_name": "alger",
+    "company": "zr_express",
+    "home_price": 600,
+    "bureau_price": 420
+  },
+  {
+    "wilaya_code": "16",
+    "wilaya_name": "alger",
+    "company": "yalidine",
+    "home_price": 700,
+    "bureau_price": 550
+  },
+  {
+    "wilaya_code": "17",
+    "wilaya_name": "djelfa",
+    "company": "zr_express",
+    "home_price": 950,
+    "bureau_price": 70
+  },
+  {
+    "wilaya_code": "17",
+    "wilaya_name": "djelfa",
+    "company": "yalidine",
+    "home_price": 950,
+    "bureau_price": 750
+  },
+  {
+    "wilaya_code": "18",
+    "wilaya_name": "jijel",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "18",
+    "wilaya_name": "jijel",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "19",
+    "wilaya_name": "sétif",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "19",
+    "wilaya_name": "sétif",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "20",
+    "wilaya_name": "saïda",
+    "company": "zr_express",
+    "home_price": 750,
+    "bureau_price": 570
+  },
+  {
+    "wilaya_code": "20",
+    "wilaya_name": "saïda",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "21",
+    "wilaya_name": "skikda",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "21",
+    "wilaya_name": "skikda",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "22",
+    "wilaya_name": "sidi bel abbès",
+    "company": "zr_express",
+    "home_price": 750,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "22",
+    "wilaya_name": "sidi bel abbès",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "23",
+    "wilaya_name": "annaba",
+    "company": "zr_express",
+    "home_price": 850,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "23",
+    "wilaya_name": "annaba",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "24",
+    "wilaya_name": "guelma",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "24",
+    "wilaya_name": "guelma",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "25",
+    "wilaya_name": "constantine",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "25",
+    "wilaya_name": "constantine",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "26",
+    "wilaya_name": "médéa",
+    "company": "zr_express",
+    "home_price": 750,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "26",
+    "wilaya_name": "médéa",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "27",
+    "wilaya_name": "mostaganem",
+    "company": "zr_express",
+    "home_price": 700,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "27",
+    "wilaya_name": "mostaganem",
+    "company": "yalidine",
+    "home_price": 700,
+    "bureau_price": 550
+  },
+  {
+    "wilaya_code": "28",
+    "wilaya_name": "m'sila",
+    "company": "zr_express",
+    "home_price": 850,
+    "bureau_price": 570
+  },
+  {
+    "wilaya_code": "28",
+    "wilaya_name": "m'sila",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "29",
+    "wilaya_name": "mascara",
+    "company": "zr_express",
+    "home_price": 700,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "29",
+    "wilaya_name": "mascara",
+    "company": "yalidine",
+    "home_price": 700,
+    "bureau_price": 550
+  },
+  {
+    "wilaya_code": "30",
+    "wilaya_name": "ouargla",
+    "company": "zr_express",
+    "home_price": 950,
+    "bureau_price": 670
+  },
+  {
+    "wilaya_code": "30",
+    "wilaya_name": "ouargla",
+    "company": "yalidine",
+    "home_price": 950,
+    "bureau_price": 750
+  },
+  {
+    "wilaya_code": "31",
+    "wilaya_name": "oran",
+    "company": "zr_express",
+    "home_price": 700,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "31",
+    "wilaya_name": "oran",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "32",
+    "wilaya_name": "el bayadh",
+    "company": "zr_express",
+    "home_price": 1050,
+    "bureau_price": 670
+  },
+  {
+    "wilaya_code": "32",
+    "wilaya_name": "el bayadh",
+    "company": "yalidine",
+    "home_price": 1050,
+    "bureau_price": 850
+  },
+  {
+    "wilaya_code": "33",
+    "wilaya_name": "illizi",
+    "company": "zr_express",
+    "home_price": "\\",
+    "bureau_price": "\\"
+  },
+  {
+    "wilaya_code": "33",
+    "wilaya_name": "illizi",
+    "company": "yalidine",
+    "home_price": 1600,
+    "bureau_price": 1400
+  },
+  {
+    "wilaya_code": "34",
+    "wilaya_name": "bordj bou arreridj",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "34",
+    "wilaya_name": "bordj bou arreridj",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "35",
+    "wilaya_name": "boumerdès",
+    "company": "zr_express",
+    "home_price": 750,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "35",
+    "wilaya_name": "boumerdès",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "36",
+    "wilaya_name": "el tarf",
+    "company": "zr_express",
+    "home_price": 850,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "36",
+    "wilaya_name": "el tarf",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "37",
+    "wilaya_name": "tindouf",
+    "company": "zr_express",
+    "home_price": "\\",
+    "bureau_price": "\\"
+  },
+  {
+    "wilaya_code": "37",
+    "wilaya_name": "tindouf",
+    "company": "yalidine",
+    "home_price": 1600,
+    "bureau_price": 1400
+  },
+  {
+    "wilaya_code": "38",
+    "wilaya_name": "tissemsilt",
+    "company": "zr_express",
+    "home_price": 700,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "38",
+    "wilaya_name": "tissemsilt",
+    "company": "yalidine",
+    "home_price": 700,
+    "bureau_price": 550
+  },
+  {
+    "wilaya_code": "39",
+    "wilaya_name": "el oued",
+    "company": "zr_express",
+    "home_price": 950,
+    "bureau_price": 670
+  },
+  {
+    "wilaya_code": "39",
+    "wilaya_name": "el oued",
+    "company": "yalidine",
+    "home_price": 950,
+    "bureau_price": 750
+  },
+  {
+    "wilaya_code": "40",
+    "wilaya_name": "khenchela",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 670
+  },
+  {
+    "wilaya_code": "40",
+    "wilaya_name": "khenchela",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "41",
+    "wilaya_name": "souk ahras",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "41",
+    "wilaya_name": "souk ahras",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "42",
+    "wilaya_name": "tipaza",
+    "company": "zr_express",
+    "home_price": 750,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "42",
+    "wilaya_name": "tipaza",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "43",
+    "wilaya_name": "mila",
+    "company": "zr_express",
+    "home_price": 800,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "43",
+    "wilaya_name": "mila",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "44",
+    "wilaya_name": "aïn defla",
+    "company": "zr_express",
+    "home_price": 600,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "44",
+    "wilaya_name": "aïn defla",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "45",
+    "wilaya_name": "naâma",
+    "company": "zr_express",
+    "home_price": 1050,
+    "bureau_price": 670
+  },
+  {
+    "wilaya_code": "45",
+    "wilaya_name": "naâma",
+    "company": "yalidine",
+    "home_price": 1050,
+    "bureau_price": 850
+  },
+  {
+    "wilaya_code": "46",
+    "wilaya_name": "aïn témouchent",
+    "company": "zr_express",
+    "home_price": 750,
+    "bureau_price": 520
+  },
+  {
+    "wilaya_code": "46",
+    "wilaya_name": "aïn témouchent",
+    "company": "yalidine",
+    "home_price": 900,
+    "bureau_price": 650
+  },
+  {
+    "wilaya_code": "47",
+    "wilaya_name": "ghardaïa",
+    "company": "zr_express",
+    "home_price": 950,
+    "bureau_price": 670
+  },
+  {
+    "wilaya_code": "47",
+    "wilaya_name": "ghardaïa",
+    "company": "yalidine",
+    "home_price": 950,
+    "bureau_price": 750
+  },
+  {
+    "wilaya_code": "48",
+    "wilaya_name": "relizane",
+    "company": "zr_express",
+    "home_price": 600,
+    "bureau_price": 370
+  },
+  {
+    "wilaya_code": "48",
+    "wilaya_name": "relizane",
+    "company": "yalidine",
+    "home_price": 590,
+    "bureau_price": 450
+  },
+  {
+    "wilaya_code": "49",
+    "wilaya_name": "timimoun",
+    "company": "zr_express",
+    "home_price": 1400,
+    "bureau_price": 970
+  },
+  {
+    "wilaya_code": "49",
+    "wilaya_name": "timimoun",
+    "company": "yalidine",
+    "home_price": 1050,
+    "bureau_price": 850
+  },
+  {
+    "wilaya_code": "50",
+    "wilaya_name": "bordj badji mokhtar",
+    "company": "zr_express",
+    "home_price": "\\",
+    "bureau_price": "\\"
+  },
+  {
+    "wilaya_code": "50",
+    "wilaya_name": "bordj badji mokhtar",
+    "company": "yalidine",
+    "home_price": "\\",
+    "bureau_price": "\\"
+  },
+  {
+    "wilaya_code": "51",
+    "wilaya_name": "ouled djellal",
+    "company": "zr_express",
+    "home_price": 950,
+    "bureau_price": 670
+  },
+  {
+    "wilaya_code": "51",
+    "wilaya_name": "ouled djellal",
+    "company": "yalidine",
+    "home_price": 950,
+    "bureau_price": 750
+  },
+  {
+    "wilaya_code": "52",
+    "wilaya_name": "béni abbès",
+    "company": "zr_express",
+    "home_price": 1200,
+    "bureau_price": 970
+  },
+  {
+    "wilaya_code": "52",
+    "wilaya_name": "béni abbès",
+    "company": "yalidine",
+    "home_price": 950,
+    "bureau_price": 750
+  },
+  {
+    "wilaya_code": "53",
+    "wilaya_name": "in salah",
+    "company": "zr_express",
+    "home_price": 1600,
+    "bureau_price": 1120
+  },
+  {
+    "wilaya_code": "53",
+    "wilaya_name": "in salah",
+    "company": "yalidine",
+    "home_price": 1600,
+    "bureau_price": 1400
+  },
+  {
+    "wilaya_code": "54",
+    "wilaya_name": "in guezzam",
+    "company": "zr_express",
+    "home_price": 1600,
+    "bureau_price": "\\"
+  },
+  {
+    "wilaya_code": "54",
+    "wilaya_name": "in guezzam",
+    "company": "yalidine",
+    "home_price": "\\",
+    "bureau_price": "\\"
+  },
+  {
+    "wilaya_code": "55",
+    "wilaya_name": "touggourt",
+    "company": "zr_express",
+    "home_price": 950,
+    "bureau_price": 670
+  },
+  {
+    "wilaya_code": "55",
+    "wilaya_name": "touggourt",
+    "company": "yalidine",
+    "home_price": 950,
+    "bureau_price": 750
+  },
+  {
+    "wilaya_code": "56",
+    "wilaya_name": "djanet",
+    "company": "zr_express",
+    "home_price": "\\",
+    "bureau_price": "\\"
+  },
+  {
+    "wilaya_code": "56",
+    "wilaya_name": "djanet",
+    "company": "yalidine",
+    "home_price": 1600,
+    "bureau_price": 1400
+  },
+  {
+    "wilaya_code": "57",
+    "wilaya_name": "el m'ghair",
+    "company": "zr_express",
+    "home_price": 950,
+    "bureau_price": "\\"
+  },
+  {
+    "wilaya_code": "57",
+    "wilaya_name": "el m'ghair",
+    "company": "yalidine",
+    "home_price": 950,
+    "bureau_price": 750
+  },
+  {
+    "wilaya_code": "58",
+    "wilaya_name": "el meniaâ",
+    "company": "zr_express",
+    "home_price": 1000,
+    "bureau_price": 670
+  },
+  {
+    "wilaya_code": "58",
+    "wilaya_name": "el meniaâ",
+    "company": "yalidine",
+    "home_price": 950,
+    "bureau_price": 750
+  }
+]

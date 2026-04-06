@@ -173,6 +173,27 @@
                         <input type="hidden" id="cust-wilaya" required>
                     </div>
                 </div>
+                <div class="form-group" id="company-group" style="display: none;">
+                    <label data-i18n="delivery_company">شركة التوصيل</label>
+                    <div class="delivery-options" id="company-options">
+                        <!-- Injected -->
+                    </div>
+                </div>
+
+                <div class="form-group" id="delivery-type-group" style="display: none;">
+                    <label data-i18n="delivery_type">نوع التوصيل</label>
+                    <div class="delivery-type-grid">
+                        <div class="type-option active" data-type="bureau">
+                            <i class="fas fa-building"></i>
+                            <span data-i18n="bureau">مكتب</span>
+                        </div>
+                        <div class="type-option" data-type="home">
+                            <i class="fas fa-home"></i>
+                            <span data-i18n="home">توصيل للبيت</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label data-i18n="address_label">العنوان</label>
                     <textarea id="cust-address" required placeholder="الحي، رقم المنزل..."></textarea>
@@ -180,6 +201,22 @@
                 <div class="form-group">
                     <label data-i18n="notes">ملاحظات (اختياري)</label>
                     <textarea id="cust-notes"></textarea>
+                </div>
+
+                <!-- Price Breakdown -->
+                <div class="price-breakdown">
+                    <div class="breakdown-row">
+                        <span data-i18n="subtotal">مجموع المنتجات:</span>
+                        <span id="breakdown-subtotal">0 DZD</span>
+                    </div>
+                    <div class="breakdown-row">
+                        <span data-i18n="delivery_fee">سعر التوصيل:</span>
+                        <span id="breakdown-delivery">0 DZD</span>
+                    </div>
+                    <div class="breakdown-row total">
+                        <span data-i18n="cart_total">المجموع الكلي:</span>
+                        <span id="breakdown-total">0 DZD</span>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100" data-i18n="confirm_order">تأكيد ورسالة واتساب</button>
             </form>

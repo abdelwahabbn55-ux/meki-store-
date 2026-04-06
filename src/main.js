@@ -43,7 +43,13 @@ const translations = {
         success_subtitle: "كيف تريد تأكيد طلبك؟",
         confirm_whatsapp: "تأكيد عبر واتساب",
         confirm_site: "✅ تم الطلب — العودة للمتجر",
-        back_to_shop: "العودة للمتجر"
+        back_to_shop: "العودة للمتجر",
+        delivery_company: "شركة التوصيل",
+        delivery_type: "نوع التوصيل",
+        bureau: "مكتب",
+        home: "توصيل للبيت",
+        subtotal: "مجموع المنتجات",
+        delivery_fee: "سعر التوصيل"
     },
     fr: {
         logo: "Makki Store",
@@ -89,7 +95,13 @@ const translations = {
         success_subtitle: "Comment voulez-vous confirmer?",
         confirm_whatsapp: "Confirmer via WhatsApp",
         confirm_site: "✅ Commande envoyée — Retour",
-        back_to_shop: "Retour au magasin"
+        back_to_shop: "Retour au magasin",
+        delivery_company: "Compagnie de livraison",
+        delivery_type: "Type de livraison",
+        bureau: "Bureau",
+        home: "Domicile",
+        subtotal: "Sous-total",
+        delivery_fee: "Frais de livraison"
     },
     en: {
         logo: "Makki Store",
@@ -135,7 +147,13 @@ const translations = {
         success_subtitle: "How would you like to confirm?",
         confirm_whatsapp: "Confirm via WhatsApp",
         confirm_site: "✅ Order placed — Back to Shop",
-        back_to_shop: "Back to Shop"
+        back_to_shop: "Back to Shop",
+        delivery_company: "Shipping Company",
+        delivery_type: "Delivery Type",
+        bureau: "Bureau",
+        home: "Home Delivery",
+        subtotal: "Subtotal",
+        delivery_fee: "Shipping Fee"
     }
 };
 
@@ -152,14 +170,29 @@ let categories = [];
 let cart = JSON.parse(localStorage.getItem('makki_cart')) || [];
 let currentLang = localStorage.getItem('makki_lang') || 'ar';
 let selectedCategoryId = 'all';
+let deliveryData = [];
+let selectedWilayaCode = '';
+let selectedCompany = null;
+let selectedDeliveryType = 'bureau';
+let deliveryPrice = 0;
 
 // --- INITIALIZATION ---
 async function init() {
     await fetchCategories();
     await fetchProducts();
+    await fetchDeliveryData();
     updateUI();
     updateCartUI();
     initReveal();
+}
+
+async function fetchDeliveryData() {
+    try {
+        const res = await fetch('delivery_prices_fixed.json');
+        deliveryData = await res.json();
+    } catch (e) {
+        console.error("Error loading delivery prices:", e);
+    }
 }
 
 // --- DATA FETCHING ---
@@ -397,13 +430,18 @@ document.getElementById('order-form').onsubmit = async (e) => {
     btn.disabled = true;
     btn.textContent = '...';
 
+    const subtotal = cart.reduce((s, i) => s + (parseInt(i.price.replace(/[^0-9]/g, '')) * i.quantity), 0);
     const orderData = {
         customer_name: document.getElementById('cust-name').value,
         phone: document.getElementById('cust-phone').value,
         wilaya: document.getElementById('cust-wilaya').value,
         address: document.getElementById('cust-address').value,
         notes: document.getElementById('cust-notes').value,
-        total_price: cart.reduce((s, i) => s + (parseInt(i.price.replace(/[^0-9]/g, '')) * i.quantity), 0),
+        subtotal: subtotal,
+        delivery_fee: deliveryPrice,
+        delivery_company: selectedCompany ? selectedCompany.company : 'N/A',
+        delivery_type: selectedDeliveryType,
+        total_price: subtotal + deliveryPrice,
         status: 'Pending'
     };
 
@@ -446,6 +484,8 @@ ${itemsText}
 --------------------------
 👤 *الاسم:* ${data.customer_name}
 📍 *الولاية:* ${data.wilaya}
+📦 *شركة التوصيل:* ${data.delivery_company} (${data.delivery_type})
+💰 *سعر التوصيل:* ${data.delivery_fee.toLocaleString()} DZD
 🏠 *العنوان:* ${data.address}
 📞 *الهاتف:* ${data.phone}
 📝 *ملاحظات:* ${data.notes || 'لا يوجد'}`;
@@ -509,20 +549,105 @@ const wilayas = [
 
 function setupWilayaDropdown() {
     const options = document.getElementById('wilaya-options');
+    const trigger = document.getElementById('wilaya-trigger');
     if (!options) return;
+    
     options.innerHTML = wilayas.map(w => `
-        <div class="select-option" data-value="${w[currentLang]} (${w.id})">
+        <div class="select-option" data-id="${w.id}" data-fr="${w.fr}" data-value="${w[currentLang]} (${w.id})">
             ${w[currentLang]} (${w.id})
         </div>
     `).join('');
 
     options.querySelectorAll('.select-option').forEach(opt => {
         opt.onclick = () => {
-            document.getElementById('wilaya-trigger').querySelector('span').textContent = opt.dataset.value;
+            trigger.querySelector('span').textContent = opt.dataset.value;
             document.getElementById('cust-wilaya').value = opt.dataset.value;
+            selectedWilayaCode = opt.dataset.id;
             document.getElementById('wilaya-select').classList.remove('active');
+            
+            // Trigger discovery of companies
+            updateDeliveryOptions(opt.dataset.fr);
         };
     });
+}
+
+function normalizeWilayaName(name) {
+    // Basic normalization: lowercase and removing Accents
+    return name.toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remove accents
+        .replace(/-/g, " ")
+        .trim();
+}
+
+function updateDeliveryOptions(wilayaFr) {
+    const companyGroup = document.getElementById('company-group');
+    const typeGroup = document.getElementById('delivery-type-group');
+    const companyOptions = document.getElementById('company-options');
+    
+    const normalizedSelected = normalizeWilayaName(wilayaFr);
+    const available = deliveryData.filter(d => normalizeWilayaName(d.wilaya_name) === normalizedSelected);
+
+    if (available.length > 0) {
+        companyGroup.style.display = 'block';
+        typeGroup.style.display = 'block';
+        
+        companyOptions.innerHTML = available.map((d, index) => `
+            <div class="company-chip ${index === 0 ? 'active' : ''}" data-company="${d.company}">
+                ${d.company.replace(/_/g, ' ')}
+            </div>
+        `).join('');
+
+        // Set default company
+        selectedCompany = available[0];
+        
+        // Add click events to chips
+        companyOptions.querySelectorAll('.company-chip').forEach(chip => {
+            chip.onclick = () => {
+                companyOptions.querySelectorAll('.company-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                selectedCompany = available.find(a => a.company === chip.dataset.company);
+                updatePriceBreakdown();
+            };
+        });
+
+        // Setup delivery type clicks (Home/Bureau)
+        document.querySelectorAll('.type-option').forEach(opt => {
+            opt.onclick = () => {
+                document.querySelectorAll('.type-option').forEach(o => o.classList.remove('active'));
+                opt.classList.add('active');
+                selectedDeliveryType = opt.dataset.type;
+                updatePriceBreakdown();
+            };
+        });
+
+        updatePriceBreakdown();
+    } else {
+        companyGroup.style.display = 'block';
+        typeGroup.style.display = 'none';
+        companyOptions.innerHTML = `<div id="no-delivery-msg">No delivery company available for this wilaya.</div>`;
+        selectedCompany = null;
+        updatePriceBreakdown();
+    }
+}
+
+function updatePriceBreakdown() {
+    const subtotal = cart.reduce((s, i) => s + (parseInt(i.price.replace(/[^0-9]/g, '')) * i.quantity), 0);
+    
+    if (selectedCompany) {
+        const price = selectedDeliveryType === 'home' ? selectedCompany.home_price : selectedCompany.bureau_price;
+        deliveryPrice = (price === "\\" || isNaN(parseInt(price))) ? 0 : parseInt(price);
+    } else {
+        deliveryPrice = 0;
+    }
+
+    const total = subtotal + deliveryPrice;
+
+    document.getElementById('breakdown-subtotal').textContent = subtotal.toLocaleString() + ' DZD';
+    document.getElementById('breakdown-delivery').textContent = deliveryPrice.toLocaleString() + ' DZD';
+    document.getElementById('breakdown-total').textContent = total.toLocaleString() + ' DZD';
+    
+    // Also update the main cart total
+    document.getElementById('total-price').textContent = total.toLocaleString() + ' DZD';
 }
 
 // --- EVENT LISTENERS ---
@@ -550,7 +675,12 @@ document.querySelectorAll('[data-lang]').forEach(btn => {
 
 document.getElementById('cart-toggle')?.addEventListener('click', openCart);
 document.getElementById('cart-close')?.addEventListener('click', closeCart);
-document.getElementById('checkout-btn')?.addEventListener('click', () => cart.length && document.getElementById('order-form-container').classList.add('active'));
+document.getElementById('checkout-btn')?.addEventListener('click', () => {
+    if (cart.length) {
+        document.getElementById('order-form-container').classList.add('active');
+        updatePriceBreakdown();
+    }
+});
 document.getElementById('back-to-cart')?.addEventListener('click', () => document.getElementById('order-form-container').classList.remove('active'));
 
 document.addEventListener('click', e => {
