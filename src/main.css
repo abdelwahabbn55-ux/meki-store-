@@ -1049,21 +1049,39 @@ section {
 }
 
 .admin-table td:last-child {
-    width: 180px;
+    width: 200px;
 }
 
 /* Control Buttons */
 .action-btns {
     display: flex;
-    gap: 0.8rem;
+    gap: 1rem;
     justify-content: center;
     align-items: center;
 }
 
+.action-btns .btn-sm {
+    height: 38px;
+    padding: 0 1.2rem;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    background: #fff;
+    color: #1a1a2e;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.action-btns .btn-sm i {
+    margin-inline-end: 0.5rem;
+}
+
 .btn-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;

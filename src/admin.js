@@ -149,6 +149,10 @@ function renderProducts(products) {
     });
 }
 
+// Make functions globally available for inline onclick if needed
+window.deleteProduct = deleteProduct;
+window.openProductModal = openProductModal;
+
 // Search & Filter
 productSearch?.addEventListener('input', filterProducts);
 categoryFilter?.addEventListener('change', filterProducts);
@@ -401,28 +405,20 @@ function renderOrders(orders) {
             <td>${new Date(o.created_at).toLocaleDateString('ar-DZ')}</td>
             <td>
                 <div class="action-btns">
-                    <button class="btn btn-sm view-order" data-id="${o.id}">
+                    <button class="btn btn-sm btn-outline view-order" data-id="${o.id}" onclick="openOrderDetails(${o.id})">
                         <i class="fas fa-eye"></i> تفاصيل
                     </button>
-                    <button class="btn-icon delete delete-order" data-id="${o.id}" title="حذف الطلب">
+                    <button class="btn-icon delete" onclick="deleteOrder(${o.id})" title="حذف الطلب">
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
             </td>
         </tr>
     `).join('');
-    
-    document.querySelectorAll('.view-order').forEach(btn => {
-        btn.onclick = () => openOrderDetails(btn.dataset.id);
-    });
-
-    document.querySelectorAll('.delete-order').forEach(btn => {
-        btn.onclick = (e) => {
-            e.stopPropagation();
-            deleteOrder(btn.dataset.id);
-        };
-    });
 }
+
+window.openOrderDetails = openOrderDetails;
+window.deleteOrder = deleteOrder;
 
 async function deleteOrder(id) {
     const confirmMsg = currentLang === 'ar' 
