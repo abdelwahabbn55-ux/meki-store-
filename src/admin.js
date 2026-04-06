@@ -13,21 +13,35 @@ let allDeliveryCompanies = [];
 let currentLang = localStorage.getItem('makki_lang') || 'ar';
 
 const WILAYAS = [
-    { code: '1', name: 'Adrar' }, { code: '2', name: 'Chlef' }, { code: '3', name: 'Laghouat' }, { code: '4', name: 'Oum El Bouaghi' },
-    { code: '5', name: 'Batna' }, { code: '6', name: 'Béjaïa' }, { code: '7', name: 'Biskra' }, { code: '8', name: 'Béchar' },
-    { code: '9', name: 'Blida' }, { code: '10', name: 'Bouira' }, { code: '11', name: 'Tamanrasset' }, { code: '12', name: 'Tébessa' },
-    { code: '13', name: 'Tlemcen' }, { code: '14', name: 'Tiaret' }, { code: '15', name: 'Tizi Ouzou' }, { code: '16', name: 'Alger' },
-    { code: '17', name: 'Djelfa' }, { code: '18', name: 'Jijel' }, { code: '19', name: 'Sétif' }, { code: '20', name: 'Saïda' },
-    { code: '21', name: 'Skikda' }, { code: '22', name: 'Sidi Bel Abbès' }, { code: '23', name: 'Annaba' }, { code: '24', name: 'Guelma' },
-    { code: '25', name: 'Constantine' }, { code: '26', name: 'Médéa' }, { code: '27', name: 'Mostaganem' }, { code: '28', name: 'M\'sila' },
-    { code: '29', name: 'Mascara' }, { code: '30', name: 'Ouargla' }, { code: '31', name: 'Oran' }, { code: '32', name: 'El Bayadh' },
-    { code: '33', name: 'Illizi' }, { code: '34', name: 'Bordj Bou Arreridj' }, { code: '35', name: 'Boumerdès' }, { code: '36', name: 'El Tarf' },
-    { code: '37', name: 'Tindouf' }, { code: '38', name: 'Tissemsilt' }, { code: '39', name: 'El Oued' }, { code: '40', name: 'Khenchela' },
-    { code: '41', name: 'Souk Ahras' }, { code: '42', name: 'Tipaza' }, { code: '43', name: 'Mila' }, { code: '44', name: 'Aïn Defla' },
-    { code: '45', name: 'Naâma' }, { code: '46', name: 'Aïn Témouchent' }, { code: '47', name: 'Ghardaïa' }, { code: '48', name: 'Relizane' },
-    { code: '49', name: 'Timimoun' }, { code: '50', name: 'Bordj Badji Mokhtar' }, { code: '51', name: 'Ouled Djellal' }, { code: '52', name: 'Béni Abbès' },
-    { code: '53', name: 'In Salah' }, { code: '54', name: 'In Guezzam' }, { code: '55', name: 'Touggourt' }, { code: '56', name: 'Djanet' },
-    { code: '57', name: 'El M\'ghair' }, { code: '58', name: 'El Meniaa' }
+    { code: "01", ar: "أدرار", fr: "Adrar", en: "Adrar" }, { code: "02", ar: "الشلف", fr: "Chlef", en: "Chlef" },
+    { code: "03", ar: "الأغواط", fr: "Laghouat", en: "Laghouat" }, { code: "04", ar: "أم البواقي", fr: "Oum El Bouaghi", en: "Oum El Bouaghi" },
+    { code: "05", ar: "باتنة", fr: "Batna", en: "Batna" }, { code: "06", ar: "بجاية", fr: "Béjaïa", en: "Béjaïa" },
+    { code: "07", ar: "بسكرة", fr: "Biskra", en: "Biskra" }, { code: "08", ar: "بشار", fr: "Béchar", en: "Béchar" },
+    { code: "09", ar: "البليدة", fr: "Blida", en: "Blida" }, { code: "10", ar: "البويرة", fr: "Bouira", en: "Bouira" },
+    { code: "11", ar: "تمنراست", fr: "Tamanrasset", en: "Tamanrasset" }, { code: "12", ar: "تبسة", fr: "Tébessa", en: "Tébessa" },
+    { code: "13", ar: "تلمسان", fr: "Tlemcen", en: "Tlemcen" }, { code: "14", ar: "تيارت", fr: "Tiaret", en: "Tiaret" },
+    { code: "15", ar: "تيزي وزو", fr: "Tizi Ouzou", en: "Tizi Ouzou" }, { code: "16", ar: "الجزائر", fr: "Alger", en: "Algiers" },
+    { code: "17", ar: "الجلفة", fr: "Djelfa", en: "Djelfa" }, { code: "18", ar: "جيجل", fr: "Jijel", en: "Jijel" },
+    { code: "19", ar: "سطيف", fr: "Sétif", en: "Sétif" }, { code: "20", ar: "سعيدة", fr: "Saïda", en: "Saïda" },
+    { code: "21", ar: "سكيكدة", fr: "Skikda", en: "Skikda" }, { code: "22", ar: "سيدي بلعباس", fr: "Sidi Bel Abbès", en: "Sidi Bel Abbès" },
+    { code: "23", ar: "عنابة", fr: "Annaba", en: "Annaba" }, { code: "24", ar: "قالمة", fr: "Guelma", en: "Guelma" },
+    { code: "25", ar: "قسنطينة", fr: "Constantine", en: "Constantine" }, { code: "26", ar: "المدية", fr: "Médéa", en: "Médéa" },
+    { code: "27", ar: "مستغانم", fr: "Mostaganem", en: "Mostaganem" }, { code: "28", ar: "المسيلة", fr: "M'Sila", en: "M'Sila" },
+    { code: "29", ar: "معسكر", fr: "Mascara", en: "Mascara" }, { code: "30", ar: "ورقلة", fr: "Ouargla", en: "Ouargla" },
+    { code: "31", ar: "وهران", fr: "Oran", en: "Oran" }, { code: "32", ar: "البيض", fr: "El Bayadh", en: "El Bayadh" },
+    { code: "33", ar: "إليزي", fr: "Illizi", en: "Illizi" }, { code: "34", ar: "برج بوعريريج", fr: "Bordj Bou Arreridj", en: "Bordj Bou Arreridj" },
+    { code: "35", ar: "بومرداس", fr: "Boumerdès", en: "Boumerdès" }, { code: "36", ar: "الطارف", fr: "El Tarf", en: "El Tarf" },
+    { code: "37", ar: "تندوف", fr: "Tindouf", en: "Tindouf" }, { code: "38", ar: "تيسمسيلت", fr: "Tissemsilt", en: "Tissemsilt" },
+    { code: "39", ar: "الوادي", fr: "El Oued", en: "El Oued" }, { code: "40", ar: "خنشلة", fr: "Khenchela", en: "Khenchela" },
+    { code: "41", ar: "سوق أهراس", fr: "Souk Ahras", en: "Souk Ahras" }, { code: "42", ar: "تيبازة", fr: "Tipaza", en: "Tipaza" },
+    { code: "43", ar: "ميلة", fr: "Mila", en: "Mila" }, { code: "44", ar: "عين الدفلى", fr: "Aïn Defla", en: "Aïn Defla" },
+    { code: "45", ar: "النعامة", fr: "Naâma", en: "Naâma" }, { code: "46", ar: "عين تموشنت", fr: "Aïn Témouchent", en: "Aïn Témouchent" },
+    { code: "47", ar: "غرداية", fr: "Ghardaïa", en: "Ghardaïa" }, { code: "48", ar: "غليزان", fr: "Relizane", en: "Relizane" },
+    { code: "49", ar: "تيميمون", fr: "Timimoun", en: "Timimoun" }, { code: "50", ar: "برج باجي مختار", fr: "Bordj Badji Mokhtar", en: "Bordj Badji Mokhtar" },
+    { code: "51", ar: "أولاد جلال", fr: "Ouled Djellal", en: "Ouled Djellal" }, { code: "52", ar: "بني عباس", fr: "Béni Abbès", en: "Béni Abbès" },
+    { code: "53", ar: "عين صالح", fr: "In Salah", en: "In Salah" }, { code: "54", ar: "عين قزام", fr: "In Guezzam", en: "In Guezzam" },
+    { code: "55", ar: "تقرت", fr: "Touggourt", en: "Touggourt" }, { code: "56", ar: "جانت", fr: "Djanet", en: "Djanet" },
+    { code: "57", ar: "المغير", fr: "El M'Ghair", en: "El M'Ghair" }, { code: "58", ar: "المنيعة", fr: "El Meniaa", en: "El Meniaa" }
 ];
 
 // --- ELEMENTS ---
@@ -596,11 +610,12 @@ async function openDeliveryModal(companyId = null) {
     // Render wilaya rows
     deliveryPricesFormList.innerHTML = WILAYAS.map(w => {
         const p = existingPrices.find(ep => ep.wilaya_code === w.code) || {};
+        const displayName = w[currentLang] || w.ar;
         return `
             <tr>
-                <td><strong>${w.code} - ${w.name}</strong></td>
-                <td><input type="number" step="10" class="price-input home-price" data-code="${w.code}" data-name="${w.name}" value="${p.home_price || ''}" placeholder="0"></td>
-                <td><input type="number" step="10" class="price-input bureau-price" data-code="${w.code}" data-name="${w.name}" value="${p.bureau_price || ''}" placeholder="0"></td>
+                <td><strong>${w.code} - ${displayName}</strong></td>
+                <td><input type="number" step="10" class="price-input home-price" data-code="${w.code}" data-name="${w.ar}" value="${p.home_price || ''}" placeholder="0"></td>
+                <td><input type="number" step="10" class="price-input bureau-price" data-code="${w.code}" data-name="${w.ar}" value="${p.bureau_price || ''}" placeholder="0"></td>
             </tr>
         `;
     }).join('');

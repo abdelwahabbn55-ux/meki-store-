@@ -1596,3 +1596,60 @@ label {
     border-radius: 8px;
     margin-top: 0.5rem;
 }
+/* Delivery Pricing Modal Adjustments */
+.delivery-prices-grid-container {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+}
+
+.delivery-prices-grid-container .admin-table {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.sticky-header thead th {
+    position: sticky;
+    top: 0;
+    background: #1a1a2e; /* Match sidebar/header bg */
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.price-input {
+    width: 100%;
+    min-width: 80px;
+    padding: 0.6rem 0.8rem !important;
+    font-size: 0.95rem !important;
+    text-align: center;
+    border-radius: 8px !important;
+}
+
+@media (max-width: 768px) {
+    .delivery-prices-grid-container {
+        padding: 0.5rem !important;
+        margin: 0 -0.5rem; /* Allow more horizontal space */
+    }
+    
+    .delivery-prices-grid-container .admin-table th,
+    .delivery-prices-grid-container .admin-table td {
+        padding: 0.6rem 0.4rem !important;
+        font-size: 0.85rem;
+    }
+
+    .price-input {
+        min-width: 70px;
+        padding: 0.5rem 0.3rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* Make the wilaya name column narrower to give more room to inputs */
+    .delivery-prices-grid-container .admin-table td:first-child {
+        min-width: 100px;
+        max-width: 120px;
+    }
+
+    #delivery-modal .modal-body {
+        padding: 1.5rem 1rem !important;
+    }
+}
