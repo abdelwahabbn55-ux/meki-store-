@@ -414,9 +414,14 @@ async function openOrderDetails(id) {
     document.getElementById('view-cust-name').textContent = order.customer_name;
     document.getElementById('view-cust-phone').textContent = order.phone;
     document.getElementById('view-cust-address').textContent = `${order.wilaya}، ${order.address}`;
+    document.getElementById('view-delivery-info').textContent = order.delivery_company ? `${order.delivery_company.replace(/_/g, ' ')} (${order.delivery_type})` : 'N/A';
     document.getElementById('view-cust-notes').textContent = order.notes || 'لا يوجد';
-    document.getElementById('update-order-status').value = order.status;
+    
+    document.getElementById('view-order-subtotal').textContent = `${parseFloat(order.subtotal || 0).toLocaleString()} DZD`;
+    document.getElementById('view-order-shipping').textContent = `${parseFloat(order.delivery_fee || 0).toLocaleString()} DZD`;
     document.getElementById('view-order-total').textContent = `${parseFloat(order.total_price).toLocaleString()} DZD`;
+    
+    document.getElementById('update-order-status').value = order.status;
 
     document.getElementById('view-order-items').innerHTML = items.map(item => `
         <div class="order-item-mini">
