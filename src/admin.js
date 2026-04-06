@@ -394,13 +394,49 @@ function renderOrders(orders) {
             <td>${parseFloat(o.total_price).toLocaleString()} DZD</td>
             <td><span class="badge badge-${o.status.toLowerCase()}">${o.status}</span></td>
             <td>${new Date(o.created_at).toLocaleDateString('ar-DZ')}</td>
-            <td><button class="btn btn-sm view-order" data-id="${o.id}">تفاصيل</button></td>
+            <td>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <button class="btn btn-sm view-order" data-id="${o.id}">تفاصيل</button>
+                    <button class="btn-icon delete delete-order" data-id="${o.id}" title="حذف الطلب">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            </td>
         </tr>
     `).join('');
     
     document.querySelectorAll('.view-order').forEach(btn => {
         btn.onclick = () => openOrderDetails(btn.dataset.id);
     });
+
+    document.querySelectorAll('.delete-order').forEach(btn => {
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            deleteOrder(btn.dataset.id);
+        };
+    });
+}
+
+async function deleteOrder(id) {
+    const confirmMsg = currentLang === 'ar' ? 'هل أنت متأكد من حذف هذا الطلب نهائياً؟' : 'Are you sure you want to permanently delete this order?';
+    if (!confirm(confirmMsg)) return;
+
+    try {
+        // 1. Delete associated order items first to maintain integrity
+        await supabase.from('order_items').delete().eq('order_id', id);
+        
+        // 2. Delete the order itself
+        const { error } = await supabase.from('orders').delete().eq('id', id);
+
+        if (error) throw error;
+
+        // 3. Refresh list and stats
+        await loadAdminOrders();
+        await loadDashboardStats();
+    } catch (err) {
+        console.error('Error deleting order:', err);
+        alert('Error: ' + err.message);
+    }
 }
 
 async function openOrderDetails(id) {
