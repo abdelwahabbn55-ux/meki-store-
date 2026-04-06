@@ -9,7 +9,26 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let allProducts = [];
 let allCategories = [];
 let allOrders = [];
+let allDeliveryCompanies = [];
 let currentLang = localStorage.getItem('makki_lang') || 'ar';
+
+const WILAYAS = [
+    { code: '1', name: 'Adrar' }, { code: '2', name: 'Chlef' }, { code: '3', name: 'Laghouat' }, { code: '4', name: 'Oum El Bouaghi' },
+    { code: '5', name: 'Batna' }, { code: '6', name: 'Béjaïa' }, { code: '7', name: 'Biskra' }, { code: '8', name: 'Béchar' },
+    { code: '9', name: 'Blida' }, { code: '10', name: 'Bouira' }, { code: '11', name: 'Tamanrasset' }, { code: '12', name: 'Tébessa' },
+    { code: '13', name: 'Tlemcen' }, { code: '14', name: 'Tiaret' }, { code: '15', name: 'Tizi Ouzou' }, { code: '16', name: 'Alger' },
+    { code: '17', name: 'Djelfa' }, { code: '18', name: 'Jijel' }, { code: '19', name: 'Sétif' }, { code: '20', name: 'Saïda' },
+    { code: '21', name: 'Skikda' }, { code: '22', name: 'Sidi Bel Abbès' }, { code: '23', name: 'Annaba' }, { code: '24', name: 'Guelma' },
+    { code: '25', name: 'Constantine' }, { code: '26', name: 'Médéa' }, { code: '27', name: 'Mostaganem' }, { code: '28', name: 'M\'sila' },
+    { code: '29', name: 'Mascara' }, { code: '30', name: 'Ouargla' }, { code: '31', name: 'Oran' }, { code: '32', name: 'El Bayadh' },
+    { code: '33', name: 'Illizi' }, { code: '34', name: 'Bordj Bou Arreridj' }, { code: '35', name: 'Boumerdès' }, { code: '36', name: 'El Tarf' },
+    { code: '37', name: 'Tindouf' }, { code: '38', name: 'Tissemsilt' }, { code: '39', name: 'El Oued' }, { code: '40', name: 'Khenchela' },
+    { code: '41', name: 'Souk Ahras' }, { code: '42', name: 'Tipaza' }, { code: '43', name: 'Mila' }, { code: '44', name: 'Aïn Defla' },
+    { code: '45', name: 'Naâma' }, { code: '46', name: 'Aïn Témouchent' }, { code: '47', name: 'Ghardaïa' }, { code: '48', name: 'Relizane' },
+    { code: '49', name: 'Timimoun' }, { code: '50', name: 'Bordj Badji Mokhtar' }, { code: '51', name: 'Ouled Djellal' }, { code: '52', name: 'Béni Abbès' },
+    { code: '53', name: 'In Salah' }, { code: '54', name: 'In Guezzam' }, { code: '55', name: 'Touggourt' }, { code: '56', name: 'Djanet' },
+    { code: '57', name: 'El M\'ghair' }, { code: '58', name: 'El Meniaa' }
+];
 
 // --- ELEMENTS ---
 const adminLayout = document.getElementById('admin-layout');
@@ -60,6 +79,7 @@ function loadSectionData(sectionId) {
         case 'products': loadAdminProducts(); break;
         case 'categories': loadAdminCategories(); break;
         case 'orders': loadAdminOrders(); break;
+        case 'delivery': loadAdminDelivery(); break;
     }
 }
 
@@ -526,3 +546,140 @@ if (loginForm) {
 
 // --- INIT ---
 checkAuth();
+// --- DELIVERY MANAGEMENT ---
+const deliveryList = document.getElementById('admin-delivery-list');
+const deliveryModal = document.getElementById('delivery-modal');
+const deliveryForm = document.getElementById('delivery-form');
+const deliveryPricesFormList = document.getElementById('delivery-prices-form-list');
+
+async function loadAdminDelivery() {
+    const { data: companies, error } = await supabase.from('delivery_companies').select('*').order('created_at', { ascending: false });
+    if (error) return;
+    allDeliveryCompanies = companies;
+    renderDeliveryCompanies(allDeliveryCompanies);
+}
+
+function renderDeliveryCompanies(companies) {
+    deliveryList.innerHTML = companies.map(c => `
+        <tr>
+            <td style="font-weight: 600;">${c.name}</td>
+            <td>
+                <span class="badge ${c.active ? 'badge-confirmed' : 'badge-cancelled'} cursor-pointer" onclick="toggleCompanyActive(${c.id}, ${c.active})">
+                    ${c.active ? 'نشط' : 'متوقف'}
+                </span>
+            </td>
+            <td>${new Date(c.created_at).toLocaleDateString('ar-DZ')}</td>
+            <td>
+                <div class="action-btns">
+                    <button class="btn btn-sm" onclick="openDeliveryModal(${c.id})"><i class="fas fa-edit"></i> تعديل الأسعار</button>
+                    <button class="btn-icon delete" onclick="deleteDeliveryCompany(${c.id})"><i class="fas fa-trash"></i></button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+async function openDeliveryModal(companyId = null) {
+    deliveryForm.reset();
+    document.getElementById('edit-delivery-id').value = companyId || '';
+    document.getElementById('delivery-modal-title').textContent = companyId ? 'تعديل أسعار التوصيل' : 'إضافة شركة توصيل جديدة';
+    
+    let existingPrices = [];
+    if (companyId) {
+        const company = allDeliveryCompanies.find(c => c.id == companyId);
+        document.getElementById('d-name').value = company.name;
+        
+        const { data } = await supabase.from('delivery_prices').select('*').eq('company_id', companyId);
+        existingPrices = data || [];
+    }
+
+    // Render wilaya rows
+    deliveryPricesFormList.innerHTML = WILAYAS.map(w => {
+        const p = existingPrices.find(ep => ep.wilaya_code === w.code) || {};
+        return `
+            <tr>
+                <td><strong>${w.code} - ${w.name}</strong></td>
+                <td><input type="number" step="10" class="price-input home-price" data-code="${w.code}" data-name="${w.name}" value="${p.home_price || ''}" placeholder="0"></td>
+                <td><input type="number" step="10" class="price-input bureau-price" data-code="${w.code}" data-name="${w.name}" value="${p.bureau_price || ''}" placeholder="0"></td>
+            </tr>
+        `;
+    }).join('');
+
+    deliveryModal.classList.add('active');
+}
+
+async function saveDeliveryCompany(e) {
+    e.preventDefault();
+    const id = document.getElementById('edit-delivery-id').value;
+    const name = document.getElementById('d-name').value;
+
+    try {
+        let companyId = id;
+        
+        // 1. Save/Update Company
+        if (id) {
+            await supabase.from('delivery_companies').update({ name }).eq('id', id);
+        } else {
+            const { data, error } = await supabase.from('delivery_companies').insert([{ name }]).select().single();
+            if (error) throw error;
+            companyId = data.id;
+        }
+
+        // 2. Prepare Price Rows
+        const priceRows = [];
+        document.querySelectorAll('#delivery-prices-form-list tr').forEach(row => {
+            const homeInput = row.querySelector('.home-price');
+            const bureauInput = row.querySelector('.bureau-price');
+            
+            const home_price = homeInput.value ? parseFloat(homeInput.value) : null;
+            const bureau_price = bureauInput.value ? parseFloat(bureauInput.value) : null;
+            
+            if (home_price !== null || bureau_price !== null) {
+                priceRows.push({
+                    company_id: companyId,
+                    wilaya_code: homeInput.dataset.code,
+                    wilaya_name: homeInput.dataset.name,
+                    home_price,
+                    bureau_price
+                });
+            }
+        });
+
+        // 3. Save Prices (Delete old and insert new for simplicity and speed)
+        if (id) {
+            await supabase.from('delivery_prices').delete().eq('company_id', id);
+        }
+        
+        if (priceRows.length > 0) {
+            const { error: pError } = await supabase.from('delivery_prices').insert(priceRows);
+            if (pError) throw pError;
+        }
+
+        deliveryModal.classList.remove('active');
+        loadAdminDelivery();
+        alert('تم حفظ البيانات بنجاح');
+    } catch (err) {
+        console.error(err);
+        alert('حدث خطأ أثناء الحفظ');
+    }
+}
+
+async function toggleCompanyActive(id, currentStatus) {
+    const { error } = await supabase.from('delivery_companies').update({ active: !currentStatus }).eq('id', id);
+    if (!error) loadAdminDelivery();
+}
+
+async function deleteDeliveryCompany(id) {
+    if (!confirm('هل أنت متأكد من حذف هذه الشركة وجميع أسعارها؟')) return;
+    const { error } = await supabase.from('delivery_companies').delete().eq('id', id);
+    if (!error) loadAdminDelivery();
+}
+
+// Event Listeners
+document.getElementById('open-add-delivery-modal')?.addEventListener('click', () => openDeliveryModal());
+document.getElementById('close-delivery-modal')?.addEventListener('click', () => deliveryModal.classList.remove('active'));
+document.getElementById('delivery-form')?.addEventListener('submit', saveDeliveryCompany);
+
+window.toggleCompanyActive = toggleCompanyActive;
+window.openDeliveryModal = openDeliveryModal;
+window.deleteDeliveryCompany = deleteDeliveryCompany;

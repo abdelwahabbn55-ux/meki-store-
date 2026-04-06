@@ -188,10 +188,33 @@ async function init() {
 
 async function fetchDeliveryData() {
     try {
-        const res = await fetch('delivery_prices_fixed.json');
-        deliveryData = await res.json();
+        const { data, error } = await supabase
+            .from('delivery_prices')
+            .select(`
+                wilaya_name,
+                home_price,
+                bureau_price,
+                delivery_companies (
+                    name,
+                    active
+                )
+            `);
+        
+        if (error) throw error;
+
+        // Filter for active companies and map to the format expected by the app
+        deliveryData = data
+            .filter(item => item.delivery_companies && item.delivery_companies.active)
+            .map(item => ({
+                wilaya_name: item.wilaya_name,
+                company: item.delivery_companies.name,
+                home_price: item.home_price,
+                bureau_price: item.bureau_price
+            }));
+            
+        console.log(`Loaded ${deliveryData.length} delivery price entries across active companies.`);
     } catch (e) {
-        console.error("Error loading delivery prices:", e);
+        console.error("Error loading delivery prices from Supabase:", e);
     }
 }
 

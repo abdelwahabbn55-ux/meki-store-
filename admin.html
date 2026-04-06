@@ -37,6 +37,10 @@
                     <i class="fas fa-shopping-bag"></i>
                     <span>الطلبات</span>
                 </div>
+                <div class="nav-item" data-section="delivery">
+                    <i class="fas fa-truck"></i>
+                    <span>التوصيل</span>
+                </div>
             </nav>
 
             <div class="sidebar-footer">
@@ -214,6 +218,37 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Delivery Section -->
+            <section id="delivery-section" class="section">
+                <header class="admin-header">
+                    <div class="header-title">
+                        <h1>إدارة التوصيل</h1>
+                        <p>أضف شركات توصيل جديدة وحدد أسعار الشحن لكل ولاية (بالمكتب أو للمنزل)</p>
+                    </div>
+                    <button class="btn btn-primary" id="open-add-delivery-modal">
+                        <i class="fas fa-plus"></i> إضافة شركة توصيل
+                    </button>
+                </header>
+
+                <div class="card-table">
+                    <div class="table-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>اسم الشركة</th>
+                                    <th>الحالة</th>
+                                    <th>تاريخ الإضافة</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-delivery-list">
+                                <!-- Injected via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
@@ -364,6 +399,45 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Delivery Modal -->
+    <div class="admin-modal" id="delivery-modal">
+        <div class="modal-body" style="max-width: 900px; width: 95%;">
+            <h2 id="delivery-modal-title">إضافة شركة توصيل جديدة</h2>
+            <form id="delivery-form">
+                <input type="hidden" id="edit-delivery-id">
+                <div class="form-group">
+                    <label>اسم الشركة (مثال: Yalidine, ZR Express)</label>
+                    <input type="text" id="d-name" required placeholder="اسم الشركة">
+                </div>
+
+                <div style="margin-top: 1.5rem;">
+                    <h3>أسعار الشحن لكل ولاية</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">أدخل سعر التوصيل للمنزل وللمكتب لكل ولاية. اترك الحقل فارغاً إذا كان التوصيل غير متوفر.</p>
+                    
+                    <div class="delivery-prices-grid-container" style="max-height: 50vh; overflow-y: auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1rem;">
+                        <table class="admin-table sticky-header">
+                            <thead>
+                                <tr>
+                                    <th>الولاية</th>
+                                    <th>توصيل للمنزل (DZD)</th>
+                                    <th>توصيل للمكتب (DZD)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="delivery-prices-form-list">
+                                <!-- Injected via JS (58 rows) -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top: 2rem;">
+                    <button type="button" class="btn btn-outline" id="close-delivery-modal">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">حفظ الشركة والأسعار</button>
+                </div>
+            </form>
         </div>
     </div>
 
