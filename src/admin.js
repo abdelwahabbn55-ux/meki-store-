@@ -9,6 +9,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let allProducts = [];
 let allCategories = [];
 let allOrders = [];
+let currentLang = localStorage.getItem('makki_lang') || 'ar';
 
 // --- ELEMENTS ---
 const adminLayout = document.getElementById('admin-layout');
@@ -424,17 +425,20 @@ function renderOrders(orders) {
 }
 
 async function deleteOrder(id) {
-    const confirmMsg = currentLang === 'ar' ? 'هل أنت متأكد من حذف هذا الطلب نهائياً؟' : 'Are you sure you want to permanently delete this order?';
+    const confirmMsg = currentLang === 'ar' 
+        ? 'هل أنت متأكد من حذف هذا الطلب نهائياً؟' 
+        : 'Are you sure you want to permanently delete this order?';
+        
     if (!confirm(confirmMsg)) return;
 
     try {
         // 1. Delete associated order items first to maintain integrity
-        await supabase.from('order_items').delete().eq('order_id', id);
+        const { error: itemsError } = await supabase.from('order_items').delete().eq('order_id', id);
+        if (itemsError) throw itemsError;
         
         // 2. Delete the order itself
-        const { error } = await supabase.from('orders').delete().eq('id', id);
-
-        if (error) throw error;
+        const { error: orderError } = await supabase.from('orders').delete().eq('id', id);
+        if (orderError) throw orderError;
 
         // 3. Refresh list and stats
         await loadAdminOrders();
