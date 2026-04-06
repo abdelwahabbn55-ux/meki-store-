@@ -413,8 +413,14 @@
                     <input type="text" id="d-name" required placeholder="اسم الشركة">
                 </div>
 
-                <div style="margin-top: 1.5rem;">
+                <div class="form-group" style="margin-top: 1.5rem;">
                     <h3>أسعار الشحن لكل ولاية</h3>
+                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+                        <div class="search-box" style="flex: 1; position: relative;">
+                            <i class="fas fa-search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                            <input type="text" id="wilaya-search" placeholder="ابحث عن ولاية..." style="padding-inline-start: 2.5rem; width: 100%;">
+                        </div>
+                    </div>
                     <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">أدخل سعر التوصيل للمنزل وللمكتب لكل ولاية. اترك الحقل فارغاً إذا كان التوصيل غير متوفر.</p>
                     
                     <div class="delivery-prices-grid-container" style="max-height: 50vh; overflow-y: auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1rem;">

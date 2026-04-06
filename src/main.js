@@ -191,6 +191,7 @@ async function fetchDeliveryData() {
         const { data, error } = await supabase
             .from('delivery_prices')
             .select(`
+                wilaya_code,
                 wilaya_name,
                 home_price,
                 bureau_price,
@@ -206,6 +207,7 @@ async function fetchDeliveryData() {
         deliveryData = data
             .filter(item => item.delivery_companies && item.delivery_companies.active)
             .map(item => ({
+                wilaya_code: item.wilaya_code, // Added this
                 wilaya_name: item.wilaya_name,
                 company: item.delivery_companies.name,
                 home_price: item.home_price,
@@ -588,8 +590,8 @@ function setupWilayaDropdown() {
             selectedWilayaCode = opt.dataset.id;
             document.getElementById('wilaya-select').classList.remove('active');
             
-            // Trigger discovery of companies
-            updateDeliveryOptions(opt.dataset.fr);
+            // Trigger discovery of companies using numeric ID
+            updateDeliveryOptions(selectedWilayaCode);
         };
     });
 }
@@ -602,13 +604,13 @@ function normalizeWilayaName(name) {
         .trim();
 }
 
-function updateDeliveryOptions(wilayaFr) {
+function updateDeliveryOptions(wilayaCode) {
     const companyGroup = document.getElementById('company-group');
     const typeGroup = document.getElementById('delivery-type-group');
     const companyOptions = document.getElementById('company-options');
     
-    const normalizedSelected = normalizeWilayaName(wilayaFr);
-    const available = deliveryData.filter(d => normalizeWilayaName(d.wilaya_name) === normalizedSelected);
+    // Filter by numeric wilaya_code (universal)
+    const available = deliveryData.filter(d => d.wilaya_code === wilayaCode);
 
     if (available.length > 0) {
         companyGroup.style.display = 'block';

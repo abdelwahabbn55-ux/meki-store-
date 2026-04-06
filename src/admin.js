@@ -595,6 +595,7 @@ function renderDeliveryCompanies(companies) {
 
 async function openDeliveryModal(companyId = null) {
     deliveryForm.reset();
+    document.getElementById('wilaya-search').value = ''; // Reset search
     document.getElementById('edit-delivery-id').value = companyId || '';
     document.getElementById('delivery-modal-title').textContent = companyId ? 'تعديل أسعار التوصيل' : 'إضافة شركة توصيل جديدة';
     
@@ -607,21 +608,32 @@ async function openDeliveryModal(companyId = null) {
         existingPrices = data || [];
     }
 
-    // Render wilaya rows
-    deliveryPricesFormList.innerHTML = WILAYAS.map(w => {
+    // Render 58 rows (numeric code fallback to Arabic/English name)
+    const renderWilayaRow = (w) => {
         const p = existingPrices.find(ep => ep.wilaya_code === w.code) || {};
         const displayName = w[currentLang] || w.ar;
         return `
-            <tr>
+            <tr data-searchable="${displayName.toLowerCase()} ${w.code}">
                 <td><strong>${w.code} - ${displayName}</strong></td>
                 <td><input type="number" step="10" class="price-input home-price" data-code="${w.code}" data-name="${w.ar}" value="${p.home_price || ''}" placeholder="0"></td>
                 <td><input type="number" step="10" class="price-input bureau-price" data-code="${w.code}" data-name="${w.ar}" value="${p.bureau_price || ''}" placeholder="0"></td>
             </tr>
         `;
-    }).join('');
+    };
 
+    deliveryPricesFormList.innerHTML = WILAYAS.map(renderWilayaRow).join('');
     deliveryModal.classList.add('active');
 }
+
+// Search Logic
+document.getElementById('wilaya-search')?.addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase().trim();
+    const rows = deliveryPricesFormList.querySelectorAll('tr');
+    rows.forEach(row => {
+        const text = row.getAttribute('data-searchable');
+        row.style.display = text.includes(term) ? '' : 'none';
+    });
+});
 
 async function saveDeliveryCompany(e) {
     e.preventDefault();
