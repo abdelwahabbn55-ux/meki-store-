@@ -400,9 +400,11 @@ function renderOrders(orders) {
             <td>${new Date(o.created_at).toLocaleDateString('ar-DZ')}</td>
             <td>
                 <div class="action-btns">
-                    <button class="btn btn-sm view-order" data-id="${o.id}">تفاصيل</button>
+                    <button class="btn btn-sm view-order" data-id="${o.id}">
+                        <i class="fas fa-eye"></i> تفاصيل
+                    </button>
                     <button class="btn-icon delete delete-order" data-id="${o.id}" title="حذف الطلب">
-                        <i class="fas fa-trash-alt"></i>
+                        <i class="fas fa-trash"></i>
                     </button>
                 </div>
             </td>
