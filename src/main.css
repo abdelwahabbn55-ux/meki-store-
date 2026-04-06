@@ -1044,11 +1044,20 @@ section {
 .badge-delivered { background: rgba(46, 204, 113, 0.15); color: #2ecc71; }
 .badge-cancelled { background: rgba(231, 76, 60, 0.15); color: #e74c3c; }
 
+.admin-table th:last-child {
+    text-align: center;
+}
+
+.admin-table td:last-child {
+    width: 140px;
+}
+
 /* Control Buttons */
 .action-btns {
     display: flex;
-    gap: 0.5rem;
-    justify-content: flex-end;
+    gap: 0.8rem;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-icon {

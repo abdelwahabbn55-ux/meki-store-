@@ -130,9 +130,11 @@ function renderProducts(products) {
             <td>${p.name_ar}</td>
             <td>${p.categories ? p.categories.name_ar : '—'}</td>
             <td>${p.price} DZD</td>
-            <td class="action-btns">
-                <button class="btn-icon edit-product" data-id="${p.id}"><i class="fas fa-edit"></i></button>
-                <button class="btn-icon delete delete-product" data-id="${p.id}"><i class="fas fa-trash"></i></button>
+            <td>
+                <div class="action-btns">
+                    <button class="btn-icon edit-product" data-id="${p.id}"><i class="fas fa-edit"></i></button>
+                    <button class="btn-icon delete delete-product" data-id="${p.id}"><i class="fas fa-trash"></i></button>
+                </div>
             </td>
         </tr>
     `).join('');
@@ -277,9 +279,11 @@ function renderCategories(cats) {
             <td>${c.name_fr}</td>
             <td>${c.name_en}</td>
             <td>${c.products ? c.products.length : 0} منتج</td>
-            <td class="action-btns">
-                <button class="btn-icon edit-cat" data-id="${c.id}"><i class="fas fa-edit"></i></button>
-                <button class="btn-icon delete delete-cat" data-id="${c.id}"><i class="fas fa-trash"></i></button>
+            <td>
+                <div class="action-btns">
+                    <button class="btn-icon edit-cat" data-id="${c.id}"><i class="fas fa-edit"></i></button>
+                    <button class="btn-icon delete delete-cat" data-id="${c.id}"><i class="fas fa-trash"></i></button>
+                </div>
             </td>
         </tr>`;
     }).join('');
@@ -395,7 +399,7 @@ function renderOrders(orders) {
             <td><span class="badge badge-${o.status.toLowerCase()}">${o.status}</span></td>
             <td>${new Date(o.created_at).toLocaleDateString('ar-DZ')}</td>
             <td>
-                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <div class="action-btns">
                     <button class="btn btn-sm view-order" data-id="${o.id}">تفاصيل</button>
                     <button class="btn-icon delete delete-order" data-id="${o.id}" title="حذف الطلب">
                         <i class="fas fa-trash-alt"></i>
